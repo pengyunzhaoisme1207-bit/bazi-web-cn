@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Cases — MÍNG LÌ</title>
+    <meta name="description" content="Explore real and historical Bazi destiny charts — from Chinese leaders to Western celebrities. See how ancient astrology reveals patterns in wealth, career, and relationships.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:        #0C0E14;
+            --bg-raised: #14171F;
+            --bg-card:   #181B25;
+            --border:    #2A2D38;
+            --text:      #E8E4D9;
+            --text-dim:  #8C8A7F;
+            --gold:      #C9A96E;
+            --gold-light: #D4B87A;
+
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-w: 1200px;
+            --section-py: 7rem;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ── Section helpers ── */
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            max-width: 560px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .section-desc {
+            margin: 0 auto;
+        }
+
+        /* ────────────────────────────────
+           NAV
+        ──────────────────────────────── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(12, 14, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-links a.nav-active {
+            color: var(--gold);
+        }
+
+        .nav-cta.nav-active {
+            color: var(--bg) !important;
+        }
+
+        .nav-cta {
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: all 0.25s;
+        }
+
+        /* ────────────────────────────────
+           HERO
+        ──────────────────────────────── */
+        .hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(201, 169, 110, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* ────────────────────────────────
+           CASE GROUP
+        ──────────────────────────────── */
+        .case-group {
+            padding: 2rem 0;
+        }
+
+        .case-group-header {
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .case-group-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: rgba(201, 169, 110, 0.08);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 100px;
+            padding: 0.35rem 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .case-group-label .dot {
+            width: 0.4rem;
+            height: 0.4rem;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .case-group-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* ── Separator between groups ── */
+        .group-separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+            margin: 5rem 0;
+        }
+
+        /* ────────────────────────────────
+           CASE CARD
+        ──────────────────────────────── */
+        .case-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .case-card:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        /* Summary (always visible) */
+        .case-summary {
+            padding: 2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .case-summary-inner {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .case-avatar {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .case-meta {
+            min-width: 0;
+        }
+
+        .case-name {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .case-years {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .case-tagline {
+            font-size: 0.88rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .case-expand-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .case-expand-icon svg {
+            width: 0.8rem;
+            height: 0.8rem;
+            stroke: var(--text-dim);
+            transition: transform 0.3s;
+        }
+
+        .case-card.open .case-expand-icon svg {
+            transform: rotate(180deg);
+        }
+
+        .case-card.open .case-expand-icon {
+            border-color: var(--gold);
+        }
+
+        /* Detail (collapsible) */
+        .case-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .case-card.open .case-detail {
+            max-height: 1200px;
+        }
+
+        .case-detail-inner {
+            padding: 0 2rem 2rem;
+        }
+
+        /* Pillars Table */
+        .pillars-mini {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-cell {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .pillar-cell-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.6rem;
+        }
+
+        .pillar-cell-stems {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1.3;
+        }
+
+        .pillar-cell-sub {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        /* Analysis */
+        .analysis-block {
+            margin-bottom: 1.2rem;
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .analysis-list li {
+            font-size: 0.88rem;
+            color: var(--text);
+            padding-left: 1rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .analysis-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65rem;
+            width: 0.35rem;
+            height: 0.35rem;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .analysis-quote {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            font-style: italic;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-left: 2px solid var(--gold);
+            border-radius: 0 8px 8px 0;
+            line-height: 1.7;
+        }
+
+        .case-cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-top: 1.2rem;
+            transition: gap 0.2s;
+        }
+
+        .case-cta-link:hover {
+            gap: 0.7rem;
+        }
+
+        .case-cta-link svg {
+            width: 0.9rem;
+            height: 0.9rem;
+        }
+
+        /* Western disclaimer */
+        .western-disclaimer {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-style: italic;
+            padding: 0.8rem;
+            background: rgba(201, 169, 110, 0.04);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ────────────────────────────────
+           CTA SECTION
+        ──────────────────────────────── */
+        .final-cta {
+            padding: var(--section-py) 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201, 169, 110, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .final-cta .section-title {
+            max-width: 500px;
+            margin: 0 auto 1rem;
+        }
+
+        .final-cta .section-desc {
+            max-width: 480px;
+            margin: 0 auto 2rem;
+        }
+
+        /* ────────────────────────────────
+           FOOTER
+        ──────────────────────────────── */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* ────────────────────────────────
+           RESPONSIVE
+        ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .case-summary-inner {
+                grid-template-columns: auto 1fr;
+            }
+            .case-expand-icon {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-py: 4.5rem; }
+
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+            }
+            .nav-toggle { display: flex; }
+
+            .hero { padding: 8rem 0 3rem; }
+
+            .container { padding: 0 1.25rem; }
+
+            .pillars-mini { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+            .pillar-cell { padding: 0.7rem; }
+            .pillar-cell-stems { font-size: 1.2rem; }
+
+            .case-summary { padding: 1.5rem; }
+            .case-detail-inner { padding: 0 1.5rem 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .pillars-mini { grid-template-columns: repeat(2, 1fr); }
+            .case-avatar { width: 2.8rem; height: 2.8rem; font-size: 1.1rem; border-radius: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">MÍNG LÌ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="what-is-bazi.html">What is Bazi</a></li>
+            <li><a href="#" class="nav-active">Famous Cases</a></li>
+            <li><a href="sample-report.html">Sample Report</a></li>
+            <li><a href="reading.html" class="btn btn-gold nav-cta">Get my reading</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+    <div class="container">
+        <p class="section-label">Famous Cases</p>
+        <h1 class="section-title" style="max-width:640px;margin:0 auto 1rem;">History's most studied charts</h1>
+        <p class="section-desc">Six figures from East and West — fully analyzed using classical Bazi methodology and four major schools of scholarship.</p>
+    </div>
+</section>
+
+<!-- ════════════════════ FROM THE EAST ════════════════════ -->
+<section class="case-group">
+    <div class="container">
+        <div class="case-group-header">
+            <div class="case-group-label"><span class="dot"></span> From the East</div>
+            <h2 class="case-group-title">Historical figures of Asia</h2>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+            <!-- ── Mao Zedong ── -->
+            <div class="case-card" data-case="mao">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">📜</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Mao Zedong 毛泽东</h3>
+                            <p class="case-years">1893–1976</p>
+                            <p class="case-tagline">From peasant revolutionary to founding a nation — classic Scholar-Noble pattern.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <!-- Pillars -->
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">癸 巳</p>
+                                <p class="pillar-cell-sub">Gui Water · Si Fire</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">甲 子</p>
+                                <p class="pillar-cell-sub">Jia Wood · Zi Water</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">丁 酉</p>
+                                <p class="pillar-cell-sub">Ding Fire · You Metal</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">戊 寅</p>
+                                <p class="pillar-cell-sub">Wu Earth · Yin Wood</p>
+                            </div>
+                        </div>
+
+                        <!-- Analysis -->
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Ding Fire (丁火) · Weak</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Direct Resource (正印格)</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Fire is weak and requires Wood support — the Jia Wood in the month pillar provides critical resource energy</li>
+                                <li>Jia-Zi month commands the Resource star at its peak — scholarly authority, intellectual leadership</li>
+                                <li>Major Luck cycles running through East Wood-Fire territory fueled meteoric rise to power</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">From peasant revolutionary to founding a nation — classic Scholar-Noble pattern. The Direct Resource structure produces leaders who mobilize through ideas, not force.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Run Run Shaw ── -->
+            <div class="case-card" data-case="shaw">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">🎬</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Run Run Shaw 邵逸夫</h3>
+                            <p class="case-years">1907–2014 · Aged 107</p>
+                            <p class="case-tagline">Built a media empire, gave away billions, lived to 107.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">丁 未</p>
+                                <p class="pillar-cell-sub">Ding Fire · Wei Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">癸 亥</p>
+                                <p class="pillar-cell-sub">Gui Water · Hai Water</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">甲 午</p>
+                                <p class="pillar-cell-sub">Jia Wood · Wu Fire</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">—</p>
+                                <p class="pillar-cell-sub">Unverified</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Jia Wood (甲木) · Strong</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Indirect Wealth (偏财格)</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Wood strong in Water month — wealth flows naturally; the Hai month nourishes the Jia Day Master like rain on a tree</li>
+                                <li>Fire at the year pillar (Ding) signals early financial destiny — entrepreneurship was written into the chart from birth</li>
+                                <li>Longevity explained by harmonious resource flow — Water produces Wood, Wood produces Fire; nothing stagnates</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">Built a media empire spanning film, television, and education. Gave away billions in philanthropy. Lived to 107 — a chart where every element feeds the next in an unbroken chain.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Zhang Xueliang ── -->
+            <div class="case-card" data-case="zhang">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">⚔️</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Zhang Xueliang 张学良</h3>
+                            <p class="case-years">1898–2001 · Aged 100</p>
+                            <p class="case-tagline">Warlord general → Xi'an Incident → 54 years under arrest.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">戊 戌</p>
+                                <p class="pillar-cell-sub">Wu Earth · Xu Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">壬 子</p>
+                                <p class="pillar-cell-sub">Ren Water · Zi Water</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">庚 申</p>
+                                <p class="pillar-cell-sub">Geng Metal · Shen Metal</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">—</p>
+                                <p class="pillar-cell-sub">Unverified</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Geng Metal (庚金) · Strong</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Direct Officer (正官格)</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Metal is strong — Geng-Shen day pillar gives a warrior's constitution — but the Officer star (Ren Water) brings inevitable conflict with authority</li>
+                                <li>Mixed Officer and Seven Killings signals power struggle: the Xi'an Incident was structurally foretold in the chart's internal tension</li>
+                                <li>54 years of house arrest reflects the Officer star overwhelming the Day Master — authority that both elevates and imprisons</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">Warlord's son, military commander, architect of the Xi'an Incident that changed China's course — then 54 years under house arrest. A chart of dramatic reversals where the Officer star is both the crown and the cage.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── Separator ── -->
+<div class="container"><div class="group-separator"></div></div>
+
+<!-- ════════════════════ FROM THE WEST ════════════════════ -->
+<section class="case-group">
+    <div class="container">
+        <div class="case-group-header">
+            <div class="case-group-label"><span class="dot"></span> From the West</div>
+            <h2 class="case-group-title">Western figures, reconstructed charts</h2>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+            <!-- ── Elon Musk ── -->
+            <div class="case-card" data-case="musk">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">🚀</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Elon Musk</h3>
+                            <p class="case-years">1971– · Born June 28, Pretoria, South Africa</p>
+                            <p class="case-tagline">PayPal → Tesla → SpaceX → X — wealth pattern repeating across industries.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <div class="western-disclaimer">
+                            Chart reconstructed from birth records using classical Bazi methodology. Western birth certificates record civil time only — True Solar Time has been calculated for Pretoria (25.7°E).
+                        </div>
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">辛 亥</p>
+                                <p class="pillar-cell-sub">Xin Metal · Hai Water</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">甲 午</p>
+                                <p class="pillar-cell-sub">Jia Wood · Wu Fire</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">庚 辰</p>
+                                <p class="pillar-cell-sub">Geng Metal · Chen Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">—</p>
+                                <p class="pillar-cell-sub">Estimated</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Geng Metal (庚金) · Strong</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Indirect Wealth (偏财格) — Wealth star dominant</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Strong Metal Day Master — relentless drive, cuts through resistance, thrives under pressure; the forge makes the blade sharper</li>
+                                <li>Wealth star dominant with Jia Wood in month pillar — multiple fortune streams, serial entrepreneurship is structural, not accidental</li>
+                                <li>Clash pillars (Hai-Wu, Chen-Chen) indicate public controversy alongside meteoric rise — the chart shows both brilliance and turbulence</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">From Zip2 to PayPal to Tesla to SpaceX to X — each venture follows the same Wealth-star pattern: identify a dominant industry, enter with force, disrupt the established order. The chart predicts this exact behavior.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Steve Jobs ── -->
+            <div class="case-card" data-case="jobs">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">💡</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Steve Jobs</h3>
+                            <p class="case-years">1955–2011 · Born February 24, San Francisco</p>
+                            <p class="case-tagline">Founding → exile → return → iPhone — a chart of dramatic reversals.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <div class="western-disclaimer">
+                            Chart reconstructed from birth records using classical Bazi methodology. Western birth certificates record civil time only — True Solar Time has been calculated for San Francisco (122.4°W).
+                        </div>
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">乙 未</p>
+                                <p class="pillar-cell-sub">Yi Wood · Wei Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">戊 寅</p>
+                                <p class="pillar-cell-sub">Wu Earth · Yin Wood</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">甲 戌</p>
+                                <p class="pillar-cell-sub">Jia Wood · Xu Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">—</p>
+                                <p class="pillar-cell-sub">Estimated</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Jia Wood (甲木) · Weak</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Hurting Officer (伤官格) — Creative genius structure</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Jia Wood Day Master — visionary, growth-oriented, needs strong roots; the tree that reaches highest has the deepest foundation</li>
+                                <li>Hurting Officer pattern — creative genius combined with disdain for convention; this is the classic "artist who changes an industry" structure</li>
+                                <li>Early luck cycle clash explains the 1985 Apple exile; return to Apple timed with favorable Wood luck — the chart's turning point mirrors reality exactly</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">Founding Apple at 21 → forced out at 30 → return at 42 → iPhone at 52. Each phase maps to a luck cycle shift. The Hurting Officer pattern demands creative freedom — and punishes convention at every turn.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Princess Diana ── -->
+            <div class="case-card" data-case="diana">
+                <div class="case-summary" onclick="toggleCase(this)">
+                    <div class="case-summary-inner">
+                        <div class="case-avatar">👑</div>
+                        <div class="case-meta">
+                            <h3 class="case-name">Princess Diana</h3>
+                            <p class="case-years">1961–1997 · Born July 1, Sandringham</p>
+                            <p class="case-tagline">The People's Princess — loved universally, constrained by institution, tragedy at 36.</p>
+                        </div>
+                        <div class="case-expand-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-detail">
+                    <div class="case-detail-inner">
+                        <div class="western-disclaimer">
+                            Chart reconstructed from birth records using classical Bazi methodology. Western birth certificates record civil time only — True Solar Time has been calculated for Sandringham (0.6°E).
+                        </div>
+                        <div class="pillars-mini">
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Year</p>
+                                <p class="pillar-cell-stems">辛 丑</p>
+                                <p class="pillar-cell-sub">Xin Metal · Chou Earth</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Month</p>
+                                <p class="pillar-cell-stems">甲 午</p>
+                                <p class="pillar-cell-sub">Jia Wood · Wu Fire</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Day</p>
+                                <p class="pillar-cell-stems">癸 酉</p>
+                                <p class="pillar-cell-sub">Gui Water · You Metal</p>
+                            </div>
+                            <div class="pillar-cell">
+                                <p class="pillar-cell-label">Hour</p>
+                                <p class="pillar-cell-stems">—</p>
+                                <p class="pillar-cell-sub">Estimated</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-block">
+                            <p class="analysis-label">Day Master: Gui Water (癸水) · Weak</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Pattern: Direct Officer (正官格) — Officer star overwhelming</p>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Key Reading Points</p>
+                            <ul class="analysis-list">
+                                <li>Gui Water Day Master — deeply empathetic, absorbs others' pain; the dewdrop that reflects the world but evaporates under pressure</li>
+                                <li>Officer star overwhelms — marriage brings status and privilege but suppresses the self; the institution's weight crushes individual expression</li>
+                                <li>1997 clash year (Ding Chou) activated a hidden conflict pillar — the fatal outcome was structurally foretold in the chart's internal tension</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-block">
+                            <p class="analysis-label">Historical Validation</p>
+                            <p class="analysis-quote">The People's Princess — beloved by millions, trapped by protocol. Her Gui Water nature made her connect with anyone, anywhere. But the overwhelming Officer star of the institution proved too heavy for the weak Day Master to bear.</p>
+                        </div>
+                        <a href="reading.html" class="case-cta-link">
+                            Read full analysis
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FINAL CTA ════════════════════ -->
+<section class="final-cta">
+    <div class="container">
+        <p class="section-label">Your Turn</p>
+        <h2 class="section-title">Curious about your own chart?</h2>
+        <p class="section-desc">Your destiny is just as layered. Find out what the Four Pillars reveal about you.</p>
+        <a href="reading.html" class="btn btn-gold" style="padding: 1rem 3rem; font-size: 1.05rem;">Get my reading →</a>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>&copy; 2026 MÍNG LÌ. All rights reserved. For entertainment and self-reflection purposes only.</p>
+    </div>
+</footer>
+
+<script>
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // ── Case card expand/collapse ──
+    function toggleCase(summaryEl) {
+        const card = summaryEl.closest('.case-card');
+        card.classList.toggle('open');
+    }
+</script>
+
+</body>
+</html>

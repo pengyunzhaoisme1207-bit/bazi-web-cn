@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Reading — MÍNG LÌ</title>
+    <meta name="description" content="Enter your birth details for a personalized Bazi + Zi Wei Dou Shu destiny analysis. 10 chapters covering chart pattern, luck cycles, wealth, career, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Shared Variables & Reset ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:        #0C0E14;
+            --bg-raised: #14171F;
+            --bg-card:   #181B25;
+            --border:    #2A2D38;
+            --text:      #E8E4D9;
+            --text-dim:  #8C8A7F;
+            --gold:      #C9A96E;
+            --gold-light: #D4B87A;
+
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-w: 1200px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-full { width: 100%; }
+
+        /* ────────────────────────────────
+           NAV (shared with index.html)
+        ──────────────────────────────── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(12, 14, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-links a.nav-active {
+            color: var(--gold);
+        }
+
+        .nav-cta.nav-active {
+            color: var(--bg) !important;
+        }
+
+        .nav-cta {
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: all 0.25s;
+        }
+
+        /* ────────────────────────────────
+           SECTION 1: FORM
+        ──────────────────────────────── */
+        .reading-hero {
+            padding: 9rem 0 5rem;
+        }
+
+        .reading-hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .reading-hero-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .reading-hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+        }
+
+        .reading-hero-sub {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .reading-hero-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .reading-hero-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .reading-hero-list li::before {
+            content: '';
+            width: 0.45rem;
+            height: 0.45rem;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── Form Card ── */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 0.45rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+        }
+
+        input::placeholder {
+            color: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        .form-note {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 0.35rem;
+            font-style: italic;
+        }
+
+        /* Radio */
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .radio-label input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.1rem;
+            height: 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--bg);
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .radio-label input[type="radio"]:checked {
+            border-color: var(--gold);
+        }
+
+        .radio-label input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.55rem;
+            height: 0.55rem;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .form-submit {
+            margin-top: 0.5rem;
+        }
+
+        .form-disclaimer {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* ────────────────────────────────
+           LOADING
+        ──────────────────────────────── */
+        .loading-screen {
+            display: none;
+            text-align: center;
+            padding: 8rem 0;
+        }
+
+        .loading-screen.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid var(--border);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-sub {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .loading-steps {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loading-step {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeInStep 0.5s ease forwards;
+        }
+
+        .loading-step:nth-child(1) { animation-delay: 0.3s; }
+        .loading-step:nth-child(2) { animation-delay: 1s; }
+        .loading-step:nth-child(3) { animation-delay: 1.8s; }
+        .loading-step:nth-child(4) { animation-delay: 2.4s; }
+
+        .loading-step .dot {
+            width: 0.35rem;
+            height: 0.35rem;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeInStep {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ────────────────────────────────
+           SECTION 2: REPORT PREVIEW
+        ──────────────────────────────── */
+        .report-section {
+            display: none;
+            padding: 6rem 0 5rem;
+        }
+
+        .report-section.active {
+            display: block;
+        }
+
+        /* Four Pillars Table */
+        .pillars-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .pillars-header-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+        }
+
+        .pillars-header-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 600;
+        }
+
+        .pillars-table {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .pillar {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .pillar:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+        }
+
+        .pillar-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.8rem;
+        }
+
+        .pillar-stems {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1.4;
+        }
+
+        .pillar-hidden {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 0.6rem;
+        }
+
+        .pillar-ten-god {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        /* Report Chapters */
+        .report-chapters {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .chapter {
+            padding-bottom: 2.5rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chapter:last-child {
+            border-bottom: none;
+        }
+
+        .chapter-label {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .chapter-title {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .chapter h3 {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.5rem;
+        }
+
+        .chapter p {
+            margin-bottom: 0.8rem;
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .chapter table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .chapter th, .chapter td {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .chapter th {
+            background: var(--bg-raised);
+            color: var(--gold);
+        }
+
+        .chapter ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .chapter li {
+            margin-bottom: 0.3rem;
+        }
+
+        .chapter strong {
+            color: var(--text);
+        }
+
+        /* ── Blurred chapters ── */
+        .chapter-locked {
+            position: relative;
+        }
+
+        .chapter-locked .chapter-content {
+            filter: blur(8px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .chapter-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            pointer-events: auto;
+        }
+
+        /* ── Unlock Card ── */
+        .unlock-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--gold);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            max-width: 480px;
+            margin: 3rem auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .unlock-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201, 169, 110, 0.08) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .unlock-badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.2rem;
+        }
+
+        .unlock-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .unlock-features {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .unlock-features li {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .unlock-features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .unlock-price {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1.2rem;
+            line-height: 1;
+        }
+
+        .unlock-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.9rem 2rem;
+            background: var(--gold);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-bottom: 1rem;
+        }
+
+        .unlock-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.3);
+        }
+
+        .unlock-guarantee {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* ────────────────────────────────
+           RESPONSIVE
+        ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .reading-hero-inner {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+            }
+            .nav-toggle { display: flex; }
+
+            .container { padding: 0 1.25rem; }
+
+            .reading-hero { padding: 7rem 0 3rem; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .pillars-table { grid-template-columns: repeat(2, 1fr); }
+
+            .unlock-features { grid-template-columns: 1fr; }
+
+            .unlock-card { padding: 2rem 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .pillars-table { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+            .pillar { padding: 1rem; }
+            .pillar-stems { font-size: 1.4rem; }
+            .form-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">MÍNG LÌ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="what-is-bazi.html">What is Bazi</a></li>
+            <li><a href="cases.html">Famous Cases</a></li>
+            <li><a href="sample-report.html">Sample Report</a></li>
+            <li><a href="#" class="btn btn-gold nav-cta nav-active">Get my reading</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════ SECTION 1: FORM ════════════════════ -->
+<section class="reading-hero" id="formSection">
+    <div class="container">
+        <div class="reading-hero-inner">
+            <!-- Left: Copy -->
+            <div class="reading-hero-copy">
+                <p class="reading-hero-label">Your Reading</p>
+                <h1 class="reading-hero-title">Your reading starts here</h1>
+                <p class="reading-hero-sub">Enter your birth details as accurately as possible. Even a 15-minute difference in birth time can shift the entire chart — so ask your parents if you're unsure.</p>
+                <ul class="reading-hero-list">
+                    <li>10 chapters of deep analysis</li>
+                    <li>Four classical schools vote on your chart</li>
+                    <li>Zi Wei Dou Shu cross-validation</li>
+                    <li>Day Master, pattern, luck cycles & more</li>
+                    <li>Delivered instantly in your browser</li>
+                </ul>
+            </div>
+
+            <!-- Right: Form Card -->
+            <div class="form-card">
+                <form id="birthForm">
+                    <div class="form-group">
+                        <label for="fullName">Full name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="How should we address you in the report?" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="birthDate">Date of birth</label>
+                            <input type="date" id="birthDate" name="birthDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthTime">Time of birth</label>
+                            <input type="time" id="birthTime" name="birthTime" required>
+                        </div>
+                    </div>
+                    <p class="form-note">As accurate as possible — even 15 min matters</p>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="birthPlace">Place of birth</label>
+                        <input type="text" id="birthPlace" name="birthPlace" placeholder="City, Country" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male" required>
+                                Male
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-gold btn-full">Generate my reading →</button>
+                    </div>
+                </form>
+
+                <p class="form-disclaimer">Your report will be ready in about 30 seconds</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ LOADING ════════════════════ -->
+<section class="loading-screen" id="loadingScreen">
+    <div class="container">
+        <div class="loading-spinner"></div>
+        <h2 class="loading-title">Reading the classics…</h2>
+        <p class="loading-sub">Your chart is being analyzed across 30+ classical texts</p>
+        <div class="loading-steps">
+            <div class="loading-step"><span class="dot"></span> Calculating Four Pillars</div>
+            <div class="loading-step"><span class="dot"></span> Analyzing chart pattern</div>
+            <div class="loading-step"><span class="dot"></span> Running Four Schools vote</div>
+            <div class="loading-step"><span class="dot"></span> Cross-validating with Zi Wei Dou Shu</div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ SECTION 2: REPORT ════════════════════ -->
+<section class="report-section" id="reportSection">
+    <div class="container">
+
+        <!-- Four Pillars -->
+        <div class="pillars-header">
+            <p class="pillars-header-label">Your Chart</p>
+            <h2 class="pillars-header-title">Your Four Pillars</h2>
+        </div>
+
+        <div class="pillars-table">
+            <div class="pillar">
+                <p class="pillar-label">Year Pillar</p>
+                <p class="pillar-stems">庚 午</p>
+                <p class="pillar-hidden">Hidden Stems: Ding, Ji</p>
+                <p class="pillar-ten-god">7K · DO</p>
+            </div>
+            <div class="pillar">
+                <p class="pillar-label">Month Pillar</p>
+                <p class="pillar-stems">壬 子</p>
+                <p class="pillar-hidden">Hidden Stems: Gui</p>
+                <p class="pillar-ten-god">EG · EG</p>
+            </div>
+            <div class="pillar">
+                <p class="pillar-label">Day Pillar</p>
+                <p class="pillar-stems">庚 寅</p>
+                <p class="pillar-hidden">Hidden Stems: Jia, Bing, Wu</p>
+                <p class="pillar-ten-god">IW · 7K</p>
+            </div>
+            <div class="pillar">
+                <p class="pillar-label">Hour Pillar</p>
+                <p class="pillar-stems">辛 巳</p>
+                <p class="pillar-hidden">Hidden Stems: Bing, Wu, Geng</p>
+                <p class="pillar-ten-god">DW · 7K</p>
+            </div>
+        </div>
+
+        <!-- Chapters -->
+        <div class="report-chapters">
+
+            <!-- Chapter 1: Full visibility -->
+            <div class="chapter">
+                <p class="chapter-label">Chapter 1</p>
+                <h2 class="chapter-title">Day Master Analysis</h2>
+                <p>You are <strong>Geng (庚) Metal</strong> — the axe, the forge, the unyielding edge. In the imagery of the <em>Di Tian Sui</em>, Geng Metal is compared to raw ore waiting to be smelted into something of value. It carries a naturally sharp, direct quality — not cruel, but unsentimental.</p>
+
+                <h3>Strength Assessment</h3>
+                <p>Born in the month of <strong>Zi (子)</strong> — the peak of winter — your Geng Metal sits on water that drains it. The month branch contains only Gui Water (Eating God), which further exhausts the Day Master.</p>
+
+                <table>
+                    <tr>
+                        <th>Force</th>
+                        <th>Elements</th>
+                        <th>Weight</th>
+                    </tr>
+                    <tr>
+                        <td>Allied (同方)</td>
+                        <td>Geng (辛), You (酉) — Metal; Earth support</td>
+                        <td>~35%</td>
+                    </tr>
+                    <tr>
+                        <td>Opposing (异方)</td>
+                        <td>Water (drain), Wood (consume), Fire (control)</td>
+                        <td>~65%</td>
+                    </tr>
+                </table>
+
+                <p>Despite the draining winter month, your chart finds support from the Hour Stem Xin (辛) Metal and hidden Wu Earth in the Day and Hour branches. The consensus: <strong>weak but not feeble</strong> — a Geng that needs fire to forge it and earth to sustain it.</p>
+
+                <h3>Key Insight</h3>
+                <p>A weak Geng Metal person is often more adaptable than a strong one. The forge doesn't break you — it defines you. Your chart suggests that pressure, properly applied, is not your enemy but your craftsman.</p>
+            </div>
+
+            <!-- Chapter 2: Locked -->
+            <div class="chapter chapter-locked">
+                <div class="chapter-content">
+                    <p class="chapter-label">Chapter 2</p>
+                    <h2 class="chapter-title">Chart Pattern (格局)</h2>
+                    <p>Your chart carries the Eating God (食神) structure, confirmed by the Gui Water penetrating from the Zi month branch. This is a pattern associated with intellectual refinement, artistic sensibility, and a preference for strategy over confrontation...</p>
+                    <h3>Pattern成败</h3>
+                    <p>The pattern succeeds because the Eating God does not encounter direct disruption from the Seven Killings. However, the cold winter water requires temperature regulation...</p>
+                    <p>Temperature analysis per the <em>Qiong Tong Bao Jian</em> suggests Bing Fire as the warming element, yet fire simultaneously threatens to weaken the already-drained Day Master. This tension defines the core challenge of your chart...</p>
+                </div>
+                <div class="chapter-overlay">
+                    <!-- Unlock card will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Unlock Card -->
+        <div class="unlock-card">
+            <p class="unlock-badge">Premium Report</p>
+            <h3 class="unlock-title">Unlock your full reading</h3>
+            <ul class="unlock-features">
+                <li>10 chapters total</li>
+                <li>Four Schools analysis</li>
+                <li>Zi Wei cross-check</li>
+                <li>Luck cycle forecast</li>
+                <li>Personal action plan</li>
+                <li>PDF download</li>
+            </ul>
+            <p class="unlock-price">$9.99</p>
+            <a href="#" class="unlock-btn">Unlock now →</a>
+            <p class="unlock-guarantee">One-time payment · Instant access · 30-day guarantee</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // ── Form submission flow (streaming) ──
+    const form = document.getElementById('birthForm');
+    const formSection = document.getElementById('formSection');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const reportSection = document.getElementById('reportSection');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // 1. Hide form, show loading
+        formSection.style.display = 'none';
+        loadingScreen.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // 2. Build payload
+        const payload = {
+            name: document.getElementById('fullName').value,
+            birth_date: document.getElementById('birthDate').value,
+            birth_time: document.getElementById('birthTime').value,
+            birth_place: document.getElementById('birthPlace').value,
+            gender: document.querySelector('input[name="gender"]:checked').value,
+        };
+
+        // 3. Progressive loading text
+        let loadingPhase = 0;
+        const loadingText = document.querySelector('.loading-title');
+        const loadingSub = document.querySelector('.loading-sub');
+        const stageTimers = [
+            { at: 0, text: 'Consulting the classics…', sub: 'Opening ancient texts and preparing your chart' },
+            { at: 5000, text: 'Calculating your Four Pillars…', sub: 'Encoding birth data into Heavenly Stems and Earthly Branches' },
+            { at: 15000, text: 'Compiling your reading…', sub: 'Four classical schools are analyzing your destiny' },
+        ];
+        stageTimers.forEach(({ at, text, sub }) => {
+            setTimeout(() => {
+                if (loadingScreen.classList.contains('active')) {
+                    loadingText.textContent = text;
+                    if (loadingSub) loadingSub.textContent = sub;
+                }
+            }, at);
+        });
+
+        // 4. Prepare report area for streaming
+        const pillars = document.querySelectorAll('.pillar');
+        const chaptersContainer = document.querySelector('.report-chapters');
+        let fullText = '';
+        let streamStarted = false;
+        let streamError = null;
+
+        try {
+            const res = await fetch('/generate-report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+                const errBody = await res.json().catch(() => null);
+                throw new Error(errBody?.detail || `Server returned ${res.status}`);
+            }
+
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+
+            // Read SSE stream
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+
+                // Parse SSE events from buffer
+                const events = buffer.split('\n\n');
+                buffer = events.pop(); // Keep incomplete event in buffer
+
+                for (const eventStr of events) {
+                    const dataMatch = eventStr.match(/^data: (.+)$/m);
+                    if (!dataMatch) continue;
+
+                    try {
+                        const data = JSON.parse(dataMatch[1]);
+
+                        if (data.error) {
+                            streamError = data.error;
+                            break;
+                        }
+
+                        if (data.done) {
+                            // Stream complete — show unlock overlay
+                            loadingScreen.classList.remove('active');
+                            showUnlockCard();
+                            break;
+                        }
+
+                        if (data.chunk) {
+                            fullText += data.chunk;
+
+                            // First content received — hide loading, show report
+                            if (!streamStarted) {
+                                streamStarted = true;
+                                loadingScreen.classList.remove('active');
+                                reportSection.classList.add('active');
+                            }
+
+                            // Parse and render chapters in real-time
+                            renderStreamingChapters(fullText);
+                        }
+                    } catch (parseErr) {
+                        // Ignore malformed JSON chunks
+                    }
+                }
+
+                if (streamError) break;
+            }
+
+            if (streamError) {
+                loadingScreen.classList.remove('active');
+                reportSection.classList.remove('active');
+                showError('Stream error: ' + streamError);
+            }
+
+        } catch (err) {
+            loadingScreen.classList.remove('active');
+            reportSection.classList.remove('active');
+            showError(err.message);
+        }
+    });
+
+    // ── Parse and render chapters from streaming text ──
+    function renderStreamingChapters(text) {
+        const chapters = parseChaptersFromText(text);
+        const chapterTitles = {
+            ch1: 'Day Master Analysis',
+            ch2: 'Chart Pattern (格局)',
+            ch3: 'Image, Temperament & Health',
+            ch4: 'Family Relations & Wealth/Career',
+            ch5: 'Major Luck Cycles & Annual Years',
+            ch6: 'Supplementary Calculations',
+            ch7: 'Four Masters Voting Results',
+            ch8: 'Zi Wei Dou Shu Analysis',
+            ch9: 'Dual-System Cross Validation',
+            ch10: 'Comprehensive Advice',
+        };
+
+        const chaptersContainer = document.querySelector('.report-chapters');
+        let html = '';
+
+        // Chapter 1 — fully visible
+        const ch1 = chapters.ch1 || '';
+        html += `<div class="chapter" id="ch1">
+            <p class="chapter-label">Chapter 1</p>
+            <h2 class="chapter-title">${chapterTitles.ch1}</h2>
+            <div class="chapter-body">${renderMarkdown(ch1)}</div>
+        </div>`;
+
+        // Chapters 2–10 — blurred with overlay
+        for (let i = 2; i <= 10; i++) {
+            const key = `ch${i}`;
+            const content = chapters[key] || '';
+            const hasContent = content.length > 0;
+            html += `<div class="chapter chapter-locked" id="${key}" ${hasContent ? '' : 'style="opacity:0.3"'}>
+                <div class="chapter-content">
+                    <p class="chapter-label">Chapter ${i}</p>
+                    <h2 class="chapter-title">${chapterTitles[key]}</h2>
+                    <div class="chapter-body">${hasContent ? renderMarkdown(content) : '<p><em>Generating…</em></p>'}</div>
+                </div>
+                <div class="chapter-overlay"></div>
+            </div>`;
+        }
+
+        chaptersContainer.innerHTML = html;
+
+        // Auto-scroll to latest chapter with content
+        let latestChapter = 'ch1';
+        for (let i = 10; i >= 1; i--) {
+            const key = i === 1 ? 'ch1' : `ch${i}`;
+            if (chapters[key] && chapters[key].length > 10) {
+                latestChapter = key;
+                break;
+            }
+        }
+        const el = document.getElementById(latestChapter);
+        if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight || rect.top < 0) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+
+    // ── Parse chapters from partial text ──
+    function parseChaptersFromText(text) {
+        const chapters = {};
+        const lines = text.split('\n');
+        let currentChapter = null;
+        let currentLines = [];
+
+        for (const line of lines) {
+            const match = line.match(/^## Chapter (\d+)/);
+            if (match) {
+                if (currentChapter) {
+                    chapters[currentChapter] = currentLines.join('\n').trim();
+                }
+                const num = parseInt(match[1]);
+                currentChapter = num === 1 ? 'ch1' : `ch${num}`;
+                currentLines = [line];
+            } else {
+                if (currentChapter) {
+                    currentLines.push(line);
+                }
+            }
+        }
+
+        if (currentChapter) {
+            chapters[currentChapter] = currentLines.join('\n').trim();
+        }
+
+        return chapters;
+    }
+
+    // ── Show unlock card after streaming complete ──
+    function showUnlockCard() {
+        // Remove any existing overlay placeholders
+        document.querySelectorAll('.chapter-overlay').forEach(overlay => {
+            if (!overlay.querySelector('.unlock-card')) {
+                overlay.innerHTML = '';
+            }
+        });
+
+        // Add unlock card if not already present
+        if (!document.querySelector('.unlock-card')) {
+            const reportContainer = document.querySelector('#reportSection .container');
+            const card = document.createElement('div');
+            card.className = 'unlock-card';
+            card.innerHTML = `
+                <p class="unlock-badge">Premium Report</p>
+                <h3 class="unlock-title">Unlock your full reading</h3>
+                <ul class="unlock-features">
+                    <li>10 chapters total</li>
+                    <li>Four Schools analysis</li>
+                    <li>Zi Wei cross-check</li>
+                    <li>Luck cycle forecast</li>
+                    <li>Personal action plan</li>
+                    <li>PDF download</li>
+                </ul>
+                <p class="unlock-price">$9.99</p>
+                <a href="#" class="unlock-btn">Unlock now →</a>
+                <p class="unlock-guarantee">One-time payment · Instant access · 30-day guarantee</p>
+            `;
+            reportContainer.appendChild(card);
+        }
+    }
+
+    // ── Render report from API response (non-streaming fallback) ──
+    function renderReport(data) {
+        // Update pillars table
+        const pillars = data.pillars || {};
+        const pillarEls = document.querySelectorAll('.pillar');
+        const pillarKeys = ['year', 'month', 'day', 'hour'];
+        const pillarLabels = ['Year Pillar', 'Month Pillar', 'Day Pillar', 'Hour Pillar'];
+
+        pillarKeys.forEach((key, i) => {
+            const p = pillars[key] || {};
+            const stem = p.stem || '—';
+            const branch = p.branch || '—';
+            pillarEls[i].querySelector('.pillar-stems').textContent = `${stem} ${branch}`;
+            pillarEls[i].querySelector('.pillar-label').textContent = pillarLabels[i];
+        });
+
+        // Render chapters
+        const chaptersContainer = document.querySelector('.report-chapters');
+        const chapters = data.chapters || {};
+        const chapterTitles = {
+            ch1: 'Day Master Analysis',
+            ch2: 'Chart Pattern (格局)',
+            ch3: 'Image, Temperament & Health',
+            ch4: 'Family Relations & Wealth/Career',
+            ch5: 'Major Luck Cycles & Annual Years',
+            ch6: 'Supplementary Calculations',
+            ch7: 'Four Masters Voting Results',
+            ch8: 'Zi Wei Dou Shu Analysis',
+            ch9: 'Dual-System Cross Validation',
+            ch10: 'Comprehensive Advice',
+        };
+
+        let html = '';
+
+        // Chapter 1 — fully visible
+        const ch1 = chapters.ch1 || '';
+        html += `<div class="chapter" id="ch1">
+            <p class="chapter-label">Chapter 1</p>
+            <h2 class="chapter-title">${chapterTitles.ch1}</h2>
+            <div class="chapter-body">${renderMarkdown(ch1)}</div>
+        </div>`;
+
+        // Chapters 2–10 — blurred with overlay
+        for (let i = 2; i <= 10; i++) {
+            const key = `ch${i}`;
+            const content = chapters[key] || '';
+            html += `<div class="chapter chapter-locked" id="${key}">
+                <div class="chapter-content">
+                    <p class="chapter-label">Chapter ${i}</p>
+                    <h2 class="chapter-title">${chapterTitles[key]}</h2>
+                    <div class="chapter-body">${renderMarkdown(content)}</div>
+                </div>
+                <div class="chapter-overlay"></div>
+            </div>`;
+        }
+
+        chaptersContainer.innerHTML = html;
+    }
+
+    // ── Simple markdown → HTML renderer ──
+    function renderMarkdown(text) {
+        if (!text) return '<p><em>Content unavailable.</em></p>';
+
+        let html = text;
+
+        // Escape HTML first to avoid double-rendering
+        html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Code blocks
+        html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+        // Tables: convert markdown tables to HTML
+        html = html.replace(/^(\|.+\|)\n(\|[-| :]+\|)\n((?:\|.+\|\n?)*)/gm, (match, headerRow, sepRow, bodyRows) => {
+            const parseRow = (row) => row.split('|').filter(c => c.trim()).map(c => c.trim());
+            const headers = parseRow(headerRow);
+            const rows = bodyRows.trim().split('\n').map(parseRow);
+
+            let table = '<table><thead><tr>';
+            headers.forEach(h => { table += `<th>${h}</th>`; });
+            table += '</tr></thead><tbody>';
+            rows.forEach(row => {
+                table += '<tr>';
+                row.forEach(cell => { table += `<td>${cell}</td>`; });
+                table += '</tr>';
+            });
+            table += '</tbody></table>';
+            return table;
+        });
+
+        // Headings
+        html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^## (.+)$/gm, '<h2 class="chapter-title">$1</h2>');
+
+        // Bold & italic
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+        // Unordered lists
+        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+
+        // Paragraphs: wrap remaining lines
+        html = html.replace(/^(?!<[huplt]|<\/)(.+)$/gm, '<p>$1</p>');
+
+        // Clean up empty paragraphs
+        html = html.replace(/<p>\s*<\/p>/g, '');
+
+        return html;
+    }
+
+    // ── Error display ──
+    function showError(message) {
+        formSection.style.display = '';
+        const existing = document.getElementById('errorBanner');
+        if (existing) existing.remove();
+
+        const banner = document.createElement('div');
+        banner.id = 'errorBanner';
+        banner.style.cssText = `
+            background: #2D1B1B;
+            border: 1px solid #8B3A3A;
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            text-align: center;
+        `;
+        banner.innerHTML = `
+            <p style="color: #F0A0A0; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem;">Unable to generate report</p>
+            <p style="color: #C89090; font-size: 0.85rem; margin-bottom: 1rem;">${escapeHtml(message)}</p>
+            <button id="retryBtn" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1.5rem;">Try again</button>
+        `;
+        document.querySelector('.form-card').appendChild(banner);
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            banner.remove();
+            formSection.style.display = '';
+        });
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+</script>
+
+</body>
+</html>

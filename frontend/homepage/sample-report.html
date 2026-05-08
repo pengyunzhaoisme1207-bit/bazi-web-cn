@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Report — MÍNG LÌ</title>
+    <meta name="description" content="A complete sample Bazi destiny report for Alexandra Chen, born May 15, 1990, 10:00 AM, London. See exactly what you'll get.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:        #0C0E14;
+            --bg-raised: #14171F;
+            --bg-card:   #181B25;
+            --border:    #2A2D38;
+            --text:      #E8E4D9;
+            --text-dim:  #8C8A7F;
+            --gold:      #C9A96E;
+            --gold-light: #D4B87A;
+
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-w: 1200px;
+            --section-py: 7rem;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.85rem 2rem; border-radius: 8px;
+            font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem;
+            letter-spacing: 0.02em; cursor: pointer;
+            transition: all 0.25s ease; border: none;
+        }
+        .btn-gold { background: var(--gold); color: var(--bg); }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,169,110,0.25); }
+
+        /* ── Section helpers ── */
+        .section-label {
+            font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 600; line-height: 1.25; margin-bottom: 1rem;
+        }
+        .section-desc { color: var(--text-dim); max-width: 560px; font-size: 1rem; line-height: 1.7; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header .section-desc { margin: 0 auto; }
+
+        /* ── NAV ── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(12,14,20,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+        .nav-logo {
+            font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700;
+            letter-spacing: 0.08em; color: var(--gold);
+        }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a { font-size: 0.88rem; font-weight: 400; color: var(--text-dim); transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.nav-active { color: var(--gold); }
+        .nav-cta.nav-active { color: var(--bg) !important; }
+        .nav-cta { padding: 0.5rem 1.4rem; font-size: 0.85rem; }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+        .nav-toggle span { width: 22px; height: 1.5px; background: var(--text); }
+
+        /* ────────────────────────────────
+           HERO
+        ──────────────────────────────── */
+        .sample-hero {
+            padding: 10rem 0 3rem;
+            position: relative;
+        }
+        .sample-hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .sample-hero-inner { text-align: center; max-width: 700px; margin: 0 auto; }
+
+        /* ── Pillars Row ── */
+        .pillars-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 560px;
+            margin: 2.5rem auto 0;
+        }
+        .pillar-item {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 0.8rem;
+            text-align: center;
+        }
+        .pillar-item-label {
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem;
+        }
+        .pillar-item-stems {
+            font-family: var(--font-serif); font-size: 1.8rem; font-weight: 600;
+            color: var(--gold); line-height: 1.3;
+        }
+        .pillar-item-reading {
+            font-size: 0.72rem; color: var(--text-dim); margin-top: 0.3rem;
+        }
+
+        /* ────────────────────────────────
+           REPORT LAYOUT (sidebar + content)
+        ──────────────────────────────── */
+        .report-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 3rem;
+            padding: 4rem 0 5rem;
+        }
+
+        /* Sidebar */
+        .report-sidebar {
+            position: sticky;
+            top: 5rem;
+            align-self: start;
+        }
+        .chapter-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .chapter-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.6rem 0;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .chapter-nav-link:hover { color: var(--text); }
+        .chapter-nav-link.active { color: var(--gold); }
+        .chapter-nav-num {
+            width: 1.5rem; height: 1.5rem;
+            border-radius: 50%;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 600;
+            flex-shrink: 0;
+        }
+        .chapter-nav-link.active .chapter-nav-num {
+            border-color: var(--gold);
+            background: rgba(201,169,110,0.1);
+            color: var(--gold);
+        }
+
+        /* Report content */
+        .report-content { min-width: 0; }
+
+        .report-chapter {
+            padding-bottom: 3rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .report-chapter:last-child { border-bottom: none; }
+
+        .chapter-num-label {
+            font-family: var(--font-sans); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+        }
+        .chapter-title {
+            font-family: var(--font-serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 1.2rem;
+        }
+        .chapter-title-sub {
+            font-size: 0.88rem; color: var(--text-dim); font-style: italic; margin-bottom: 1.2rem;
+        }
+        .report-content p { margin-bottom: 0.8rem; line-height: 1.8; }
+        .report-content h3 {
+            font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600;
+            margin: 1.5rem 0 0.6rem;
+        }
+
+        /* Tables */
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .report-table th, .report-table td {
+            padding: 0.55rem 0.8rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.88rem;
+        }
+        .report-table th {
+            background: var(--bg-raised);
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        .report-table td { color: var(--text); }
+
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* Lists */
+        .report-content ul { padding-left: 1.5rem; margin-bottom: 0.8rem; }
+        .report-content li { margin-bottom: 0.35rem; line-height: 1.7; }
+
+        /* Quote */
+        .report-quote {
+            font-size: 0.92rem;
+            color: var(--text-dim);
+            font-style: italic;
+            padding: 1rem 1.2rem;
+            background: var(--bg-raised);
+            border-left: 2px solid var(--gold);
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        /* Rating */
+        .danger-rating { color: var(--gold); letter-spacing: 0.1em; }
+
+        /* ────────────────────────────────
+           FINAL CTA
+        ──────────────────────────────── */
+        .final-cta {
+            padding: var(--section-py) 0;
+            text-align: center;
+            background: var(--bg-raised);
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+        .final-cta::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(201,169,110,0.04) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .final-cta .section-title { max-width: 600px; margin: 0 auto 1rem; }
+        .final-cta .section-desc { max-width: 480px; margin: 0 auto 2rem; }
+        .final-price { font-size: 0.85rem; color: var(--text-dim); }
+        .final-price strong { color: var(--text); }
+
+        /* ────────────────────────────────
+           FOOTER
+        ──────────────────────────────── */
+        .footer {
+            padding: 3rem 0; border-top: 1px solid var(--border); text-align: center;
+        }
+        .footer p { font-size: 0.78rem; color: var(--text-dim); }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; list-style: none; }
+        .footer-links a { font-size: 0.82rem; color: var(--text-dim); transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text); }
+
+        /* ────────────────────────────────
+           RESPONSIVE
+        ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .report-layout { grid-template-columns: 1fr; gap: 0; }
+            .report-sidebar { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-py: 4.5rem; }
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: 4rem; left: 0; right: 0;
+                background: var(--bg); border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem; gap: 1.2rem;
+            }
+            .nav-toggle { display: flex; }
+            .sample-hero { padding: 8rem 0 2rem; }
+            .container { padding: 0 1.25rem; }
+            .pillars-row { grid-template-columns: repeat(2, 1fr); }
+            .pillar-item-stems { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">MÍNG LÌ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="what-is-bazi.html">What is Bazi</a></li>
+            <li><a href="cases.html">Famous Cases</a></li>
+            <li><a href="#" class="nav-active">Sample Report</a></li>
+            <li><a href="reading.html" class="btn btn-gold nav-cta">Get my reading</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="sample-hero">
+    <div class="container">
+        <div class="sample-hero-inner">
+            <p class="section-label">Sample Reading</p>
+            <h1 class="section-title" style="max-width:640px;margin:0 auto 0.8rem;">Alexandra Chen</h1>
+            <p class="section-desc" style="margin-bottom:0;">Born May 15, 1990 · 10:00 AM · London, UK</p>
+            <p class="section-desc" style="margin-top:1rem;font-size:0.88rem;">This is a complete sample report. All ten chapters are visible so you know exactly what you're getting.</p>
+
+            <div class="pillars-row">
+                <div class="pillar-item">
+                    <p class="pillar-item-label">Year · Niánzhù</p>
+                    <p class="pillar-item-stems">庚 午</p>
+                    <p class="pillar-item-reading">Gēng Wǔ</p>
+                </div>
+                <div class="pillar-item">
+                    <p class="pillar-item-label">Month · Yuèzhù</p>
+                    <p class="pillar-item-stems">辛 巳</p>
+                    <p class="pillar-item-reading">Xīn Sì</p>
+                </div>
+                <div class="pillar-item">
+                    <p class="pillar-item-label">Day · Rìzhù</p>
+                    <p class="pillar-item-stems">戊 戌</p>
+                    <p class="pillar-item-reading">Wù Xū</p>
+                </div>
+                <div class="pillar-item">
+                    <p class="pillar-item-label">Hour · Shízhù</p>
+                    <p class="pillar-item-stems">己 巳</p>
+                    <p class="pillar-item-reading">Jǐ Sì</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ REPORT ════════════════════ -->
+<div class="container">
+    <div class="report-layout">
+
+        <!-- Sidebar Nav -->
+        <nav class="report-sidebar">
+            <ol class="chapter-nav-list">
+                <li><a href="#ch1" class="chapter-nav-link"><span class="chapter-nav-num">1</span>Chart Setup</a></li>
+                <li><a href="#ch2" class="chapter-nav-link"><span class="chapter-nav-num">2</span>Pattern &amp; Strength</a></li>
+                <li><a href="#ch3" class="chapter-nav-link"><span class="chapter-nav-num">3</span>Image &amp; Temperament</a></li>
+                <li><a href="#ch4" class="chapter-nav-link"><span class="chapter-nav-num">4</span>Family &amp; Wealth</a></li>
+                <li><a href="#ch5" class="chapter-nav-link"><span class="chapter-nav-num">5</span>Luck Cycles</a></li>
+                <li><a href="#ch6" class="chapter-nav-link"><span class="chapter-nav-num">6</span>Supplementary</a></li>
+                <li><a href="#ch7" class="chapter-nav-link"><span class="chapter-nav-num">7</span>Four Schools Vote</a></li>
+                <li><a href="#ch8" class="chapter-nav-link"><span class="chapter-nav-num">8</span>Zi Wei Dou Shu</a></li>
+                <li><a href="#ch9" class="chapter-nav-link"><span class="chapter-nav-num">9</span>Cross Validation</a></li>
+                <li><a href="#ch10" class="chapter-nav-link"><span class="chapter-nav-num">10</span>Action Plan</a></li>
+            </ol>
+        </nav>
+
+        <!-- Report Content -->
+        <div class="report-content">
+
+            <!-- Chapter 1 -->
+            <div class="report-chapter" id="ch1">
+                <p class="chapter-num-label">Chapter 1</p>
+                <h2 class="chapter-title">Chart Setup (八字排盘)</h2>
+                <h3>1.1 Four Pillars</h3>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Pillar</th><th>Heavenly Stem</th><th>Earthly Branch</th><th>Hidden Stems</th><th>Na Yin (纳音)</th><th>Void (空亡)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Year</td><td>Geng 庚 (Yang Metal)</td><td>Wu 午 (Yang Fire, Horse)</td><td>Ding 丁, Ji 己</td><td>Lu Di Huo · Earth Road Fire</td><td>Chen Si 辰巳</td></tr>
+                            <tr><td>Month</td><td>Xin 辛 (Yin Metal)</td><td>Si 巳 (Yin Fire, Snake)</td><td>Bing 丙, Wu 戊, Geng 庚</td><td>Bai La Jin · White Wax Metal</td><td>—</td></tr>
+                            <tr><td>Day</td><td>Wu 戊 (Yang Earth)</td><td>Xu 戌 (Yang Earth, Dog)</td><td>Wu 戊, Xin 辛, Ding 丁</td><td>Ping Di Mu · Flatland Wood</td><td>—</td></tr>
+                            <tr><td>Hour</td><td>Ji 己 (Yin Earth)</td><td>Si 巳 (Yin Fire, Snake)</td><td>Bing 丙, Wu 戊, Geng 庚</td><td>Da Lin Mu · Great Forest Wood</td><td>—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>1.2 Five Elements Distribution</h3>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead><tr><th>Element</th><th>Count</th><th>Position</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Metal 金</strong></td><td>3</td><td>Geng 庚 (Year Stem), Xin 辛 (Month Stem), hidden Geng 庚 (Month &amp; Hour Branch)</td></tr>
+                            <tr><td><strong>Fire 火</strong></td><td>3</td><td>Wu 午 (Year Branch), Si 巳 (Month Branch), Si 巳 (Hour Branch)</td></tr>
+                            <tr><td><strong>Earth 土</strong></td><td>2</td><td>Wu 戊 (Day Stem · Day Master), Xu 戌 (Day Branch), Ji 己 (Hour Stem)</td></tr>
+                            <tr><td><strong>Water 水</strong></td><td>0</td><td>Not present in stems or branches — hidden in Si fire as trace only</td></tr>
+                            <tr><td><strong>Wood 木</strong></td><td>0</td><td>Not present in stems or branches — hidden in Xu earth as trace only</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>1.3 Day Master</h3>
+                <p><strong>Wu Earth (戊土)</strong> — Yang Earth. The mountain, the dam, the fortress. According to the <em>Di Tian Sui</em>, Wu Earth is compared to a great mountain — immovable, reliable, carrying all things upon its surface.</p>
+                <p><strong>Strength: Strong (身强)</strong>. Born in the month of Si (巳), Fire produces Earth — the Day Master is in season. Additionally, Wu sits on Xu (戌) Earth, giving root support. Ji Earth in the hour stem further reinforces. The allied force (Earth + Fire) clearly dominates.</p>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="report-chapter" id="ch2">
+                <p class="chapter-num-label">Chapter 2</p>
+                <h2 class="chapter-title">Day Master Strength &amp; Pattern (日主强弱与格局)</h2>
+                <h3>2.1 Month Command (观月令)</h3>
+                <p>Born in the month of <strong>Si (巳)</strong> — early summer, the Fire is rising. Si contains Bing Fire (本气), Wu Earth (中气), and Geng Metal (余气). Wu Earth is produced by Fire, so the Day Master is born in a supportive season (得令).</p>
+
+                <h3>2.2 Pattern (格局)</h3>
+                <p>Xin Metal (辛金) penetrates from the Month Branch Si — confirmed as the <strong>Direct Wealth (正财格)</strong> pattern. The wealth star is present and active, though it sits on Fire which controls it. This creates an interesting dynamic: wealth is generated but also constantly tested.</p>
+
+                <h3>2.3 Favorable &amp; Unfavorable Elements</h3>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead><tr><th>Category</th><th>Elements</th><th>Reason</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Favorable 用神</strong></td><td>Metal, Water</td><td>Metal drains excess Earth; Water brings flow to the dry chart</td></tr>
+                            <tr><td><strong>Secondary Favorable 喜神</strong></td><td>Wood</td><td>Wood controls Earth — helpful in moderation but dangerous in excess</td></tr>
+                            <tr><td><strong>Unfavorable 忌神</strong></td><td>Fire, Earth</td><td>Already dominant — adding more creates stagnation</td></tr>
+                            <tr><td><strong>仇神</strong></td><td>—</td><td>Fire produces Earth — compounding the imbalance</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="report-chapter" id="ch3">
+                <p class="chapter-num-label">Chapter 3</p>
+                <h2 class="chapter-title">Image, Temperament &amp; Health (形象与性情)</h2>
+                <h3>3.1 Image</h3>
+                <p>The chart image is <strong>Fire-Earth dominant with Metal expression</strong> — a mountain that contains precious ore. The structure is relatively clear (清): strong Earth produced by Fire, expressing through Metal. No major clashes disrupt the core structure.</p>
+
+                <h3>3.2 Temperament</h3>
+                <p><strong>Earth dominant</strong> — solid build, deliberate movements, calm presence. Wu Earth people are the anchors in any room: reliable, nurturing, slow to anger but immovable once decided. You are a natural mediator who prefers stability over drama.</p>
+                <p>The Direct Wealth pattern adds a <strong>practical, detail-oriented streak</strong>. You don't dream of abstract riches — you calculate, plan, and build. The Xin Metal in the month stem gives you an analytical precision that others find impressive and occasionally intimidating.</p>
+
+                <h3>3.3 Health Notes</h3>
+                <p><strong>Digestive system and spleen</strong> are the vulnerable areas — Earth governs these in Five Element medicine. The absence of Water in the chart suggests kidney and urinary system should be monitored. Avoid overthinking (思伤脾) and damp environments.</p>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="report-chapter" id="ch4">
+                <p class="chapter-num-label">Chapter 4</p>
+                <h2 class="chapter-title">Family Relations &amp; Wealth/Career (六亲与财官)</h2>
+                <h3>4.1 Family (Six Relations)</h3>
+                <p><strong>Parents:</strong> Metal is strong in the chart — the father figure (represented by the controlling element) is influential. The Year pillar's Geng Metal suggests a structured, possibly strict upbringing. The Month pillar contains the mother's influence through the Resource element (Fire producing Earth).</p>
+                <p><strong>Partner:</strong> For a female Wu Earth chart, the partner is represented by Wood (the controlling element). Wood is absent from the chart — this doesn't mean no marriage, but it suggests the partner may appear later or be less prominent in the early life. A partner with strong Water element is ideal — they balance Earth's solidity with flow and adaptability.</p>
+
+                <h3>4.2 Wealth</h3>
+                <p>Direct Wealth (正财) pattern — <strong>consistent, steady accumulation</strong> rather than sudden windfalls. Xin Metal penetrates from the month, confirming an income derived from professional skill and structured effort. Wealth peaks occur during Metal and Water luck cycles, when the chart's elements are balanced.</p>
+                <p>The Fire-rich chart means wealth is produced through creative output and visibility — careers in media, technology, or structured environments (finance, consulting) align well.</p>
+
+                <h3>4.3 Career</h3>
+                <p>Fire produces Earth → Earth produces Metal. This is a <strong>creative-to-practical pipeline</strong>. You're built for roles where you can take something abstract (Fire ideas) and make it real (Metal results). Management, operations, project leadership — any role that requires both vision and execution.</p>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="report-chapter" id="ch5">
+                <p class="chapter-num-label">Chapter 5</p>
+                <h2 class="chapter-title">Major Luck Cycles (大运流年)</h2>
+                <h3>5.1 Starting Age</h3>
+                <p>Yang Earth, female birth → major luck runs <strong>reverse</strong> from the month pillar (Xin Si 辛巳). Starting age: approximately <strong>8 years old</strong>.</p>
+
+                <h3>5.2 Major Luck Pillars</h3>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead><tr><th>Age</th><th>Period</th><th>Pillar</th><th>Element</th><th>Ten God</th></tr></thead>
+                        <tbody>
+                            <tr><td>8–17</td><td>1998–2007</td><td>庚 辰</td><td>Yang Metal / Yang Earth</td><td>Eating God / Comparison</td></tr>
+                            <tr><td>18–27</td><td>2008–2017</td><td>己 卯</td><td>Yin Earth / Yin Wood</td><td>Rob Wealth / Direct Officer</td></tr>
+                            <tr><td>28–37</td><td>2018–2027</td><td>戊 寅</td><td>Yang Earth / Yang Wood</td><td>Comparison / Seven Killings</td></tr>
+                            <tr><td><strong>38–47</strong></td><td><strong>2028–2037</strong></td><td><strong>丁 丑</strong></td><td><strong>Yin Fire / Yin Earth</strong></td><td><strong>Direct Resource / Wealth Storage</strong></td></tr>
+                            <tr><td>48–57</td><td>2038–2047</td><td>丙 子</td><td>Yang Fire / Yang Water</td><td>Indirect Resource / Direct Wealth</td></tr>
+                            <tr><td>58–67</td><td>2048–2057</td><td>乙 亥</td><td>Yin Wood / Yin Water</td><td>Direct Officer / Indirect Wealth</td></tr>
+                            <tr><td>68–77</td><td>2058–2067</td><td>甲 戌</td><td>Yang Wood / Yang Earth</td><td>Seven Killings / Comparison</td></tr>
+                            <tr><td>78–87</td><td>2068–2077</td><td>癸 酉</td><td>Yin Water / Yin Metal</td><td>Direct Wealth / Hurting Officer</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>5.3 Current Period: 2018–2027 戊寅 (Wu Yin)</h3>
+                <p><strong>Comparison / Seven Killings</strong>. This decade brings a push-pull dynamic: the Comparison stem (Wu) reinforces the Day Master, bringing confidence and peer support. But the Seven Killings branch (Yin Wood) creates pressure and challenges — career shifts, competitive environments, occasional conflict with authority.</p>
+
+                <h3>5.4 Next 3 Annual Years</h3>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead><tr><th>Year</th><th>Pillar</th><th>Assessment</th><th>Rating</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>2024</strong></td><td>甲 辰 (Jia Chen)</td><td>Seven Killings arrives — significant career pressure. Chen-Xu clash activates the Day branch: relationship changes or relocation likely. High-stress year but potential for breakthrough.</td><td><span class="danger-rating">★★★★</span></td></tr>
+                            <tr><td><strong>2025</strong></td><td>乙 巳 (Yi Si)</td><td>Direct Officer with Fire support — career advancement, recognition. The Si-Si self-penalty in the chart suggests internal anxiety despite external success. Manage stress.</td><td><span class="danger-rating">★★</span></td></tr>
+                            <tr><td><strong>2026</strong></td><td>丙 午 (Bing Wu)</td><td>Strong Fire year — Resource overload. Overthinking, possible stagnation. The Fire feeds the already-dominant Earth. Avoid major financial decisions this year. Focus on consolidation.</td><td><span class="danger-rating">★★★☆</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="report-chapter" id="ch6">
+                <p class="chapter-num-label">Chapter 6</p>
+                <h2 class="chapter-title">Supplementary Calculations (补充推算)</h2>
+                <h3>6.1 Life Palace (命宫)</h3>
+                <p><strong>Shen (申) Palace</strong>. The Life Palace sits in the Monkey position, containing Geng Metal (本气), Ren Water (中气), and Wu Earth (余气). This is a favorable palace — it brings Metal and Water, both favorable elements for this chart. The Shen palace suggests travel, intellectual pursuits, and cross-cultural connections.</p>
+
+                <h3>6.2 Auspicious Stars (神煞)</h3>
+                <p><strong>Tian Yi Nobleman (天乙贵人):</strong> In Chou (丑) and Wei (未) — helpful people appear during Ox and Goat years. Network-building in these periods yields unexpected opportunities.</p>
+                <p><strong>Traveling Horse (驿马):</strong> In Shen (申) — a strong indicator of mobility. Career or life changes involving travel, relocation, or international connections are structurally supported.</p>
+
+                <h3>6.3 Illness &amp; Remedy (病药说)</h3>
+                <p><strong>The illness (病):</strong> Wood controls Earth, but Wood is absent from the chart. The imbalance is not from Wood attack but from <strong>Fire overproducing Earth</strong> — the chart is too hot and dry.</p>
+                <p><strong>The remedy (药):</strong> Water and Metal. Water cools the excess Fire; Metal drains the surplus Earth and provides expression. Years and luck cycles with Water or Metal are the natural medicine for this chart.</p>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="report-chapter" id="ch7">
+                <p class="chapter-num-label">Chapter 7</p>
+                <h2 class="chapter-title">Four Schools Voting (四家投票)</h2>
+                <p>Four classical Bazi scholarship traditions independently analyze this chart. Their consensus determines the confidence level.</p>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Aspect</th><th>徐乐吾 Xu Lewu</th><th>梁湘润 Liang Xianrun</th><th>袁树珊 Yuan Shushan</th><th>韦千里 Wei Qianli</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pattern</td><td>Direct Wealth (正财)</td><td>Direct Wealth (正财)</td><td>Direct Wealth (正财)</td><td>Direct Wealth (正财)</td></tr>
+                            <tr><td>Day Master</td><td>Strong</td><td>Strong</td><td>Strong</td><td>Strong</td></tr>
+                            <tr><td>Favorable</td><td>Metal, Water</td><td>Metal, Water</td><td>Metal</td><td>Metal, Water</td></tr>
+                            <tr><td>Current Luck</td><td>Challenging but growth</td><td>Pressure with reward</td><td>Transformation period</td><td>Challenging but growth</td></tr>
+                            <tr><td>Wealth Outlook</td><td>Steady accumulation</td><td>Steady accumulation</td><td>Steady accumulation</td><td>Strong after 40</td></tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: rgba(201,169,110,0.08);">
+                                <td><strong>Consensus</strong></td>
+                                <td colspan="4" style="color: var(--gold);">All four schools agree on Direct Wealth pattern, Strong Day Master, Metal/Water as favorable. Current luck cycle shows pressure with eventual reward. <strong>Confidence: HIGH</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="report-chapter" id="ch8">
+                <p class="chapter-num-label">Chapter 8</p>
+                <h2 class="chapter-title">Zi Wei Dou Shu Analysis (紫微斗数)</h2>
+                <h3>8.1 Life Palace</h3>
+                <p><strong>Tian Tong (天同) — the Blessing Star</strong> sits in the Life Palace. Tian Tong represents ease, enjoyment, and natural talent — someone who finds their path without excessive struggle. Combined with the Bazi's Wu Earth Day Master, this creates a person who appears calm and steady on the surface but carries deep intellectual capacity.</p>
+
+                <h3>8.2 Body Palace (身宫)</h3>
+                <p><strong>Tian Liang (天梁)</strong> — the Elder Star — occupies the Body Palace. This indicates a life trajectory that gravitates toward wisdom, teaching, and advisory roles. In later years, the Tian Liang influence strengthens — mentorship and guidance become central themes.</p>
+
+                <h3>8.3 Three Parties &amp; Four Courts</h3>
+                <p>The Career Palace shows <strong>Tai Yang (太阳)</strong> — the Sun Star — suggesting visibility, public-facing work, and leadership potential. The Wealth Palace carries <strong>Tai Yin (太阴)</strong> — the Moon Star — indicating wealth through patience, accumulation, and possibly female-connected industries.</p>
+
+                <h3>8.4 Current Decade (2020s)</h3>
+                <p>The current major luck direction favors <strong>career breakthrough</strong>. The Tai Yang activation in the Career Palace aligns with the Bazi's current Wu Yin (戊寅) luck cycle — both systems point to a period of professional growth. However, the relationship sector shows caution: Tian Liang in the Body Palace suggests a tendency toward over-responsibility in partnerships.</p>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="report-chapter" id="ch9">
+                <p class="chapter-num-label">Chapter 9</p>
+                <h2 class="chapter-title">Dual-System Cross Validation (双系统交叉验证)</h2>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Dimension</th><th>Bazi Conclusion</th><th>Zi Wei Conclusion</th><th>Combined Judgment</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Wealth</strong></td><td>Direct Wealth — steady accumulation, peak in Metal/Water cycles</td><td>Tai Yin in Wealth — patient accumulation, female-connected income</td><td style="color: var(--gold);">✓ Consistent — steady wealth building is confirmed by both systems. Best periods align in 40s–50s.</td></tr>
+                            <tr><td><strong>Career</strong></td><td>Fire→Earth→Metal pipeline — creative to practical. Management, operations.</td><td>Tai Yang in Career — visibility, leadership, public-facing roles.</td><td style="color: var(--gold);">✓ Consistent — leadership through practical execution, not just vision. Strong 2020s trajectory.</td></tr>
+                            <tr><td><strong>Marriage</strong></td><td>Wood absent — partner appears later. Water-element partner ideal.</td><td>Tian Liang in Body Palace — over-responsibility in partnerships.</td><td style="color: var(--gold);">✓ Consistent — marriage likely delayed. Partner should bring emotional flow (Water) to balance.</td></tr>
+                            <tr><td><strong>Travel</strong></td><td>Traveling Horse in Shen — mobility, cross-cultural connections.</td><td>Migration Palace active — benefits from geographical movement.</td><td style="color: var(--gold);">✓ Consistent — both systems strongly support international travel or relocation.</td></tr>
+                            <tr><td><strong>Health</strong></td><td>Digestive system, spleen. Avoid overthinking and damp.</td><td>疾厄 Palace shows moderate stress — nervous system caution.</td><td style="color: var(--text-dim);">△ Partial — both flag stress-related issues but through different organs. Monitor both.</td></tr>
+                            <tr><td><strong>Noble People</strong></td><td>Tian Yi Nobleman in Chou/Wei — helpers in Ox/Goat years.</td><td>Wen Chang / Wen Qu present — intellectual mentors.</td><td style="color: var(--gold);">✓ Consistent — helpful people appear through intellectual and professional networks.</td></tr>
+                            <tr><td><strong>Golden Period</strong></td><td>38–47 (Ding Chou) — Resource + Wealth Storage.</td><td>2020s favor career breakthrough.</td><td style="color: var(--gold);">✓ Consistent — late 30s to late 40s is the prime period for career and wealth.</td></tr>
+                            <tr><td><strong>Worst Period</strong></td><td>2026 (Bing Wu) — Fire overload, stagnation.</td><td>Conflict stars activate — relationship strain possible.</td><td style="color: var(--text-dim);">△ Partial — Bazi flags financial caution; Zi Wei flags relationship caution. Both valid.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="report-quote">
+                    <strong>Summary:</strong> 6 out of 8 dimensions show full consistency between Bazi and Zi Wei systems. 2 dimensions show partial agreement — both valid but flagging different aspects of the same risk. Overall confidence: HIGH.
+                </div>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="report-chapter" id="ch10">
+                <p class="chapter-num-label">Chapter 10</p>
+                <h2 class="chapter-title">Comprehensive Advice (综合建议)</h2>
+                <h3>Breakthrough Direction</h3>
+                <p><strong>Leverage Metal luck</strong> — finance, technology, structured environments. Your chart excels in domains where precision, reliability, and long-term thinking are valued. Avoid purely creative or speculative fields — your wealth comes through building, not gambling. The Traveling Horse in your Life Palace supports international opportunities — don't limit yourself geographically.</p>
+
+                <h3>Golden Window</h3>
+                <p><strong>2027–2032</strong>. The Ding Chou (丁丑) luck cycle brings Direct Resource — a period of consolidation, authority, and compounding returns. The Chou branch activates your Tian Yi Nobleman, bringing unexpected support. This is your decade to build something lasting. Act before the Wood luck incoming (after 2037) shifts the terrain.</p>
+
+                <h3>Caution Points</h3>
+                <p><strong>2026 (Bing Wu)</strong> — avoid over-commitment. Fire-heavy years bring stagnation for Earth-dominant charts. Don't make major financial decisions this year. Focus on skill-building, networking, and maintaining existing positions. The pressure is real but temporary — the next year (2027) marks the beginning of your strongest period.</p>
+                <p><strong>Relationships:</strong> Your chart's Earth dominance can create a tendency toward emotional rigidity. The absence of Wood (the controlling element) means you may struggle with vulnerability. A partner who brings Water — adaptability, emotional intelligence — is your ideal complement.</p>
+
+                <h3>Life Theme</h3>
+                <div class="report-quote">
+                    <strong>The Steadfast Builder.</strong> Your chart is not one of sudden brilliance but of patient, compounding excellence. You are the mountain that grows taller with each season — not the lightning that flashes and fades. Your greatest strength is persistence. Your greatest risk is stubbornness. Build slowly, build well, and the chart promises a life of substance.
+                </div>
+            </div>
+
+        </div><!-- /report-content -->
+    </div><!-- /report-layout -->
+</div><!-- /container -->
+
+<!-- ════════════════════ FINAL CTA ════════════════════ -->
+<section class="final-cta">
+    <div class="container">
+        <p class="section-label">Your Turn</p>
+        <h2 class="section-title">Your report will be this thorough — and entirely about you</h2>
+        <p class="section-desc">Alexandra's chart took 30 seconds to generate. Yours is next.</p>
+        <a href="reading.html" class="btn btn-gold" style="padding: 1rem 3rem; font-size: 1.05rem; margin-bottom: 1rem;">Get my reading →</a>
+        <p class="final-price">$9.99 · One-time · Instant delivery · PDF included</p>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>&copy; 2026 MÍNG LÌ. All rights reserved. For entertainment and self-reflection purposes only.</p>
+    </div>
+</footer>
+
+<script>
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => { navLinks.classList.toggle('open'); });
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { navLinks.classList.remove('open'); });
+    });
+
+    // ── Scroll spy for chapter sidebar ──
+    const chapters = document.querySelectorAll('.report-chapter');
+    const navLinks2 = document.querySelectorAll('.chapter-nav-link');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks2.forEach(l => l.classList.remove('active'));
+                const id = entry.target.getAttribute('id');
+                const link = document.querySelector(`.chapter-nav-link[href="#${id}"]`);
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    chapters.forEach(ch => observer.observe(ch));
+</script>
+
+</body>
+</html>

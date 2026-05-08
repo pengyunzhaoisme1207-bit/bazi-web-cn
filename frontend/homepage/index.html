@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MING LI — Your Destiny, Decoded</title>
+    <meta name="description" content="AI-powered Chinese astrology reading. Get a comprehensive Bazi + Zi Wei Dou Shu destiny report analyzed by four classical schools — delivered instantly in your browser.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:        #0C0E14;
+            --bg-raised: #14171F;
+            --border:    #2A2D38;
+            --text:      #E8E4D9;
+            --text-dim:  #8C8A7F;
+            --gold:      #C9A96E;
+            --gold-light: #D4B87A;
+            --gold-dark: #A8894E;
+
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-w: 1200px;
+            --section-py: 7rem;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ── Section helpers ── */
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            max-width: 560px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .section-desc {
+            margin: 0 auto;
+        }
+
+        /* ────────────────────────────────
+           NAV
+        ──────────────────────────────── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(12, 14, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-links a.nav-active {
+            color: var(--gold);
+        }
+
+        .nav-cta.nav-active {
+            color: var(--bg) !important;
+        }
+
+        .nav-cta {
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: all 0.25s;
+        }
+
+        /* ────────────────────────────────
+           HERO
+        ──────────────────────────────── */
+        .hero {
+            padding: 10rem 0 7rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201, 169, 110, 0.06) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .hero-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 600;
+            line-height: 1.18;
+            max-width: 780px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-sub {
+            color: var(--text-dim);
+            font-size: clamp(1rem, 1.6vw, 1.15rem);
+            max-width: 540px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-price {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .hero-price strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ────────────────────────────────
+           PREVIEW STRIP
+        ──────────────────────────────── */
+        .preview-strip {
+            padding: 0 0 var(--section-py);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .preview-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .preview-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .preview-card-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .preview-card-title {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .preview-card-text {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .preview-card .blurred-line {
+            filter: blur(4px);
+            user-select: none;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .preview-card .unlock-hint {
+            margin-top: 1rem;
+            font-size: 0.72rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+        }
+
+        /* ────────────────────────────────
+           WHAT YOU RECEIVE
+        ──────────────────────────────── */
+        .features {
+            padding: var(--section-py) 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+        }
+
+        .feature-icon {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .feature-desc {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* ────────────────────────────────
+           HOW IT WORKS
+        ──────────────────────────────── */
+        .how-it-works {
+            padding: var(--section-py) 0;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 2.2rem;
+            left: 16.66%;
+            right: 16.66%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin: 0 auto 1.5rem;
+            background: var(--bg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ────────────────────────────────
+           FAMOUS CASES
+        ──────────────────────────────── */
+        .famous-cases {
+            padding: var(--section-py) 0;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .case-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .case-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .case-card-emoji {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-card-name {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .case-card-years {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-bottom: 0.8rem;
+        }
+
+        .case-card-quote {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .case-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 1rem;
+        }
+
+        .case-cta-text {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .case-cta p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* ────────────────────────────────
+           REVIEWS
+        ──────────────────────────────── */
+        .reviews {
+            padding: var(--section-py) 0;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 1.2rem;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .review-avatar {
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+
+        .review-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .review-location {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* ────────────────────────────────
+           FINAL CTA
+        ──────────────────────────────── */
+        .final-cta {
+            padding: var(--section-py) 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201, 169, 110, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .final-cta .section-title {
+            max-width: 600px;
+            margin: 0 auto 1rem;
+        }
+
+        .final-cta .section-desc {
+            max-width: 480px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .final-cta-price {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .final-cta-price strong {
+            color: var(--text);
+        }
+
+        /* ────────────────────────────────
+           FOOTER
+        ──────────────────────────────── */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* ────────────────────────────────
+           RESPONSIVE
+        ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .preview-grid { grid-template-columns: repeat(2, 1fr); }
+            .cases-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-py: 4.5rem; }
+
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+            }
+            .nav-toggle { display: flex; }
+
+            .hero { padding: 8rem 0 4rem; }
+
+            .preview-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; gap: 3rem; }
+            .steps::before { display: none; }
+            .cases-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+
+            .container { padding: 0 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="#" class="nav-logo">MÍNG LÌ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="what-is-bazi.html">What is Bazi</a></li>
+            <li><a href="cases.html">Famous Cases</a></li>
+            <li><a href="sample-report.html">Sample Report</a></li>
+            <li><a href="reading.html" class="btn btn-gold nav-cta">Get my reading</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+    <div class="container">
+        <p class="hero-label">Chinese Destiny Analysis · Powered by AI</p>
+        <h1 class="hero-title">Your life, decoded from the <em>moment you were born</em></h1>
+        <p class="hero-sub">Bazi (八字) is a thousand-year-old system of destiny analysis rooted in classical Chinese scholarship. We've trained it on the complete canon of ancient texts — and let AI deliver a reading worthy of the old masters.</p>
+        <div class="hero-actions">
+            <a href="#get-reading" class="btn btn-gold">Get my reading — $9.99</a>
+            <a href="#what-is-bazi" class="btn btn-outline">Learn more</a>
+        </div>
+        <p class="hero-price" style="margin-top: 1rem;">Delivered instantly · 10 chapters · English</p>
+    </div>
+</section>
+
+<!-- ════════════════════ PREVIEW STRIP ════════════════════ -->
+<section class="preview-strip" id="sample-report">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Preview</p>
+            <h2 class="section-title">A glimpse inside your report</h2>
+            <p class="section-desc">Each report contains 10 chapters of in-depth analysis. Here's what four of them look like.</p>
+        </div>
+        <div class="preview-grid">
+            <!-- Card 1: Day Master -->
+            <div class="preview-card">
+                <p class="preview-card-label">Chapter 2 · Day Master</p>
+                <p class="preview-card-title">The Geng Metal Day Master</p>
+                <p class="preview-card-text">You are Geng (庚) Metal — the axe, the forge, the unyielding edge. Born in the month of Zi (子), your metal is tempered by winter water...</p>
+                <p class="blurred-line">Strength analysis reveals a complex interplay between the allied earth and metal elements versus the opposing fire and water...</p>
+                <p class="unlock-hint">→ 8 more chapters await</p>
+            </div>
+            <!-- Card 2: Pattern -->
+            <div class="preview-card">
+                <p class="preview-card-label">Chapter 2 · Pattern</p>
+                <p class="preview-card-title">Shang Guan Pattern</p>
+                <p class="preview-card-text">Your chart carries the Hurting Officer (伤官) structure — a sign of creative rebellion and intellectual sharpness. The pattern is confirmed by...</p>
+                <p class="blurred-line">Temperature regulation calls for fire to warm the cold winter metal, yet fire also threatens to weaken the structure. This tension defines your...</p>
+                <p class="unlock-hint">→ 8 more chapters await</p>
+            </div>
+            <!-- Card 3: Luck Cycles -->
+            <div class="preview-card">
+                <p class="preview-card-label">Chapter 5 · Luck Cycles</p>
+                <p class="preview-card-title">Current: Ding Chou Pillar</p>
+                <p class="preview-card-text">You are currently in the Ding Chou (丁丑) major luck cycle, ages 34–43. Ding Fire arrives as the Direct Officer, bringing career authority...</p>
+                <p class="blurred-line">The Chou Earth combines with your chart's You (酉) to form a partial metal alliance, strengthening your Day Master. However, the clash with...</p>
+                <p class="unlock-hint">→ 8 more chapters await</p>
+            </div>
+            <!-- Card 4: Zi Wei -->
+            <div class="preview-card">
+                <p class="preview-card-label">Chapter 8 · Zi Wei Dou Shu</p>
+                <p class="preview-card-title">Zi Wei + Tian Fu in Life Palace</p>
+                <p class="preview-card-text">Your Zi Wei (紫微) chart places the Emperor Star alongside Tian Fu in your Life Palace — a configuration of natural leadership and...</p>
+                <p class="blurred-line">The Three Parties and Four Courts reveal Wen Chang in the Wealth Palace, suggesting income through intellect rather than enterprise. The presence of...</p>
+                <p class="unlock-hint">→ 8 more chapters await</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ WHAT YOU RECEIVE ════════════════════ -->
+<section class="features" id="what-is-bazi">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">What You Receive</p>
+            <h2 class="section-title">Ten chapters of deep analysis</h2>
+            <p class="section-desc">Every report is a complete reading of your chart — from the Four Pillars to the Zi Wei stars, cross-validated and written in plain English.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">日</div>
+                <h3 class="feature-title">Day Master Analysis</h3>
+                <p class="feature-desc">Your core element, its strength, and what it reveals about your nature — based on the Di Tian Sui classic.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">格</div>
+                <h3 class="feature-title">Chart Pattern (格局)</h3>
+                <p class="feature-desc">The structural pattern of your chart, whether it succeeds or fails, and what elements strengthen or weaken it.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">运</div>
+                <h3 class="feature-title">Luck Cycles (大运)</h3>
+                <p class="feature-desc">Your current ten-year luck pillar, the next three annual years with danger ratings, and what to watch for.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">投</div>
+                <h3 class="feature-title">Four Schools Vote</h3>
+                <p class="feature-desc">Four classical masters — Xu Lewu, Liang Xiangrun, Yuan Shushan, Wei Qianli — cast independent judgments, then vote on consensus.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">微</div>
+                <h3 class="feature-title">Zi Wei Cross-Check</h3>
+                <p class="feature-desc">An entirely independent system — Purple Star Astrology — verifies or challenges the Bazi reading across eight life dimensions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">策</div>
+                <h3 class="feature-title">Action Plan</h3>
+                <p class="feature-desc">Practical guidance: breakthrough directions, caution periods, golden windows for career, wealth, and relationships.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ HOW IT WORKS ════════════════════ -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">How It Works</p>
+            <h2 class="section-title">Three steps to clarity</h2>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Enter Your Birth Details</h3>
+                <p class="step-desc">Date, time, and place of birth. The more precise the time, the more accurate the reading.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 class="step-title">AI Reads the Classics</h3>
+                <p class="step-desc">Our engine processes your chart through 30+ classical texts and four schools of thought — the way a master would.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Receive Your Report</h3>
+                <p class="step-desc">A 10-chapter destiny analysis in English, delivered instantly. Preview three chapters free before unlocking the full report.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FAMOUS CASES ════════════════════ -->
+<section class="famous-cases" id="famous-cases">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Famous Cases</p>
+            <h2 class="section-title">History's charts, decoded</h2>
+            <p class="section-desc">We've analyzed the birth charts of historical figures to demonstrate the system's depth and accuracy.</p>
+        </div>
+        <div class="cases-grid">
+            <div class="case-card">
+                <div class="case-card-emoji">📜</div>
+                <p class="case-card-name">Mao Zedong</p>
+                <p class="case-card-years">1893–1976</p>
+                <p class="case-card-quote">"A chart of immense ambition — the Hurting Officer with Seven Killings explains both the genius and the devastation."</p>
+            </div>
+            <div class="case-card">
+                <div class="case-card-emoji">🎬</div>
+                <p class="case-card-name">Run Run Shaw</p>
+                <p class="case-card-years">1907–2014</p>
+                <p class="case-card-quote">"Direct Wealth with Direct Officer — a chart built for sustained enterprise. He lived exactly what the chart promised: 106 years."</p>
+            </div>
+            <div class="case-card">
+                <div class="case-card-emoji">⚔️</div>
+                <p class="case-card-name">Zhang Xueliang</p>
+                <p class="case-card-years">1901–2001</p>
+                <p class="case-card-quote">"The Young Marshal's chart shows the clash that defined him — a life of dramatic turns, from military power to decades of house arrest."</p>
+            </div>
+            <div class="case-card case-cta">
+                <p class="case-cta-text">Your story next?</p>
+                <p>A complete reading, written for you.</p>
+                <a href="#get-reading" class="btn btn-gold" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">Get my reading</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ REVIEWS ════════════════════ -->
+<section class="reviews">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Early Access Reviews</p>
+            <h2 class="section-title">What people are saying</h2>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★ ★ ★ ★ ★</div>
+                <p class="review-text">"I've had professional readings before, but this was the most thorough I've ever seen. The Four Masters vote section is brilliant — it's like getting four opinions at once. Spot on about my career transition year."</p>
+                <div class="review-author">
+                    <div class="review-avatar">JT</div>
+                    <div>
+                        <p class="review-name">James T.</p>
+                        <p class="review-location">London, UK</p>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★ ★ ★ ★ ★</div>
+                <p class="review-text">"My grandmother used to talk about Bazi but I never understood it until this report. It explained everything in plain English — the luck cycles, the element balance. I actually felt seen by a machine. Weird but true."</p>
+                <div class="review-author">
+                    <div class="review-avatar">SL</div>
+                    <div>
+                        <p class="review-name">Sarah L.</p>
+                        <p class="review-location">Toronto, Canada</p>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★ ★ ★ ★ ★</div>
+                <p class="review-text">"The dual-system cross-check is what sold me. Bazi said one thing about my wealth luck, and Zi Wei confirmed it independently. I showed it to my dad — a lifelong Bazi believer — and he said it was the most accurate he'd read."</p>
+                <div class="review-author">
+                    <div class="review-avatar">WK</div>
+                    <div>
+                        <p class="review-name">Wei K.</p>
+                        <p class="review-location">Singapore</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FINAL CTA ════════════════════ -->
+<section class="final-cta" id="get-reading">
+    <div class="container">
+        <p class="section-label">Ready?</p>
+        <h2 class="section-title">The ancients said knowing your fate is the first step to shaping it</h2>
+        <p class="section-desc">A complete 10-chapter destiny report. Day Master, pattern, luck cycles, four-school consensus, Zi Wei cross-validation, and a personal action plan.</p>
+        <a href="reading.html" class="btn btn-gold" style="padding: 1rem 3rem; font-size: 1.05rem;">Get my reading — $9.99</a>
+        <p class="final-cta-price">One-time payment · <strong>Delivered instantly</strong> · No subscription</p>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>&copy; 2026 MÍNG LÌ. All rights reserved. For entertainment and self-reflection purposes only.</p>
+    </div>
+</footer>
+
+<script>
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+        links.classList.toggle('open');
+    });
+
+    // Close nav on link click (mobile)
+    links.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            links.classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Bazi? — MÍNG LÌ</title>
+    <meta name="description" content="Bazi, or Four Pillars of Destiny, is China's most sophisticated destiny analysis system. Learn how it works, how it differs from Western astrology, and what your chart reveals.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:        #0C0E14;
+            --bg-raised: #14171F;
+            --bg-card:   #181B25;
+            --border:    #2A2D38;
+            --text:      #E8E4D9;
+            --text-dim:  #8C8A7F;
+            --gold:      #C9A96E;
+            --gold-light: #D4B87A;
+
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-w: 1200px;
+            --section-py: 7rem;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ── Section helpers ── */
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            max-width: 560px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .section-desc {
+            margin: 0 auto;
+        }
+
+        /* ────────────────────────────────
+           NAV
+        ──────────────────────────────── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(12, 14, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-links a.nav-active {
+            color: var(--gold);
+        }
+
+        .nav-cta.nav-active {
+            color: var(--bg) !important;
+        }
+
+        .nav-cta {
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: all 0.25s;
+        }
+
+        /* ────────────────────────────────
+           HERO
+        ──────────────────────────────── */
+        .hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(201, 169, 110, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* ────────────────────────────────
+           BLOCK 1: Positioning Quote
+        ──────────────────────────────── */
+        .positioning {
+            padding: 0 0 var(--section-py);
+        }
+
+        .positioning-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .positioning-quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .positioning-quote::before {
+            content: '';
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2rem;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .positioning-text {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .positioning-text strong {
+            color: var(--text);
+        }
+
+        .positioning-text em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* ────────────────────────────────
+           BLOCK 2: Four Pillars Diagram
+        ──────────────────────────────── */
+        .four-pillars {
+            padding: var(--section-py) 0;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pillar-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .pillar-card:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .pillar-card-chinese {
+            font-family: var(--font-serif);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card-stems {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 0 40px rgba(201, 169, 110, 0.15);
+        }
+
+        .pillar-card-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .pillar-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ────────────────────────────────
+           BLOCK 3: Five Elements
+        ──────────────────────────────── */
+        .five-elements {
+            padding: var(--section-py) 0;
+        }
+
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .element-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .element-card:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .element-char {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+            text-shadow: 0 0 30px rgba(201, 169, 110, 0.12);
+        }
+
+        .element-name {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ────────────────────────────────
+           BLOCK 4: Comparison Table
+        ──────────────────────────────── */
+        .comparison {
+            padding: var(--section-py) 0;
+        }
+
+        .comparison-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: var(--bg-raised);
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .comparison-table th:first-child {
+            color: var(--gold);
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .comparison-table th:nth-child(3) {
+            color: var(--gold);
+        }
+
+        .comparison-table td {
+            color: var(--text-dim);
+        }
+
+        .comparison-table td:first-child {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table td:nth-child(3) {
+            color: var(--text);
+        }
+
+        /* ────────────────────────────────
+           BLOCK 5: Four Schools
+        ──────────────────────────────── */
+        .four-schools {
+            padding: var(--section-py) 0;
+        }
+
+        .schools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .school-card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .school-card:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+        }
+
+        .school-chinese {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .school-name {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .school-desc {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .school-method {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* ────────────────────────────────
+           BLOCK 6: FAQ
+        ──────────────────────────────── */
+        .faq {
+            padding: var(--section-py) 0;
+        }
+
+        .faq-list {
+            max-width: 740px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.3rem 0;
+            cursor: pointer;
+            user-select: none;
+            font-family: var(--font-sans);
+            font-size: 0.98rem;
+            font-weight: 500;
+            color: var(--text);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: var(--gold);
+        }
+
+        .faq-icon {
+            width: 1.3rem;
+            height: 1.3rem;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .faq-icon svg {
+            width: 0.7rem;
+            height: 0.7rem;
+            stroke: var(--text-dim);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-icon {
+            border-color: var(--gold);
+        }
+
+        .faq-item.open .faq-icon svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 400px;
+            padding-bottom: 1.3rem;
+        }
+
+        .faq-answer p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* ────────────────────────────────
+           FINAL CTA
+        ──────────────────────────────── */
+        .final-cta {
+            padding: var(--section-py) 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201, 169, 110, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .final-cta .section-title {
+            max-width: 500px;
+            margin: 0 auto 1rem;
+        }
+
+        /* ────────────────────────────────
+           FOOTER
+        ──────────────────────────────── */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* ────────────────────────────────
+           RESPONSIVE
+        ──────────────────────────────── */
+        @media (max-width: 1024px) {
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+            .elements-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-py: 4.5rem; }
+
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem;
+                gap: 1.2rem;
+            }
+            .nav-toggle { display: flex; }
+
+            .hero { padding: 8rem 0 3rem; }
+
+            .container { padding: 0 1.25rem; }
+
+            .pillars-grid { grid-template-columns: 1fr; }
+            .elements-grid { grid-template-columns: repeat(2, 1fr); }
+            .schools-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .elements-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+            .element-card { padding: 1.2rem; }
+            .element-char { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="index.html" class="nav-logo">MÍNG LÌ</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="nav-active">What is Bazi</a></li>
+            <li><a href="cases.html">Famous Cases</a></li>
+            <li><a href="sample-report.html">Sample Report</a></li>
+            <li><a href="reading.html" class="btn btn-gold nav-cta">Get my reading</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+    <div class="container">
+        <p class="section-label">Understanding Bazi</p>
+        <h1 class="section-title" style="max-width: 480px; margin: 0 auto;">What is Bazi?</h1>
+        <p class="section-desc">The Four Pillars of Destiny — China's most sophisticated system for understanding human fate, refined over 1,000 years.</p>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 1: Positioning ════════════════════ -->
+<section class="positioning">
+    <div class="container">
+        <div class="positioning-inner">
+            <blockquote class="positioning-quote">
+                "Bazi is to Chinese metaphysics what a natal chart is to Western astrology — except it goes deeper."
+            </blockquote>
+            <p class="positioning-text">
+                <strong>Bazi</strong> (八字, literally <em>"Eight Characters"</em>) maps the exact cosmic conditions at your moment of birth into <strong>four pillars</strong> — Year, Month, Day, Hour — each containing a <strong>Heavenly Stem</strong> and <strong>Earthly Branch</strong>. These eight characters become the blueprint of your personality, relationships, career, health, and the timing of major life events.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 2: Four Pillars Diagram ════════════════════ -->
+<section class="four-pillars">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">The Blueprint</p>
+            <h2 class="section-title">The Four Pillars</h2>
+            <p class="section-desc">Each pillar captures a different dimension of your life. Together, they form a complete map.</p>
+        </div>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <p class="pillar-card-chinese">年柱</p>
+                <p class="pillar-card-stems">癸巳</p>
+                <h3 class="pillar-card-title">Year Pillar</h3>
+                <p class="pillar-card-desc">Your ancestral roots, early childhood, and the era you were born into.</p>
+            </div>
+            <div class="pillar-card">
+                <p class="pillar-card-chinese">月柱</p>
+                <p class="pillar-card-stems">甲子</p>
+                <h3 class="pillar-card-title">Month Pillar</h3>
+                <p class="pillar-card-desc">Your parents, career environment, and dominant personality traits.</p>
+            </div>
+            <div class="pillar-card">
+                <p class="pillar-card-chinese">日柱</p>
+                <p class="pillar-card-stems">丁酉</p>
+                <h3 class="pillar-card-title">Day Pillar</h3>
+                <p class="pillar-card-desc">You — the Day Master is your core element and identity.</p>
+            </div>
+            <div class="pillar-card">
+                <p class="pillar-card-chinese">时柱</p>
+                <p class="pillar-card-stems">戊寅</p>
+                <h3 class="pillar-card-title">Hour Pillar</h3>
+                <p class="pillar-card-desc">Your children, later years, and hidden inner world.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 3: Five Elements ════════════════════ -->
+<section class="five-elements">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Elemental Forces</p>
+            <h2 class="section-title">The Five Elements</h2>
+            <p class="section-desc">Everything in the chart relates back to five elemental forces — their balance, flow, and interaction.</p>
+        </div>
+        <div class="elements-grid">
+            <div class="element-card">
+                <p class="element-char">木</p>
+                <h3 class="element-name">Wood</h3>
+                <p class="element-desc">Growth, expansion, vision, spring</p>
+            </div>
+            <div class="element-card">
+                <p class="element-char">火</p>
+                <h3 class="element-name">Fire</h3>
+                <p class="element-desc">Passion, expression, fame, summer</p>
+            </div>
+            <div class="element-card">
+                <p class="element-char">土</p>
+                <h3 class="element-name">Earth</h3>
+                <p class="element-desc">Stability, nurturing, boundaries, transition</p>
+            </div>
+            <div class="element-card">
+                <p class="element-char">金</p>
+                <h3 class="element-name">Metal</h3>
+                <p class="element-desc">Precision, discipline, harvest, autumn</p>
+            </div>
+            <div class="element-card">
+                <p class="element-char">水</p>
+                <h3 class="element-name">Water</h3>
+                <p class="element-desc">Wisdom, adaptability, depth, winter</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 4: Comparison ════════════════════ -->
+<section class="comparison">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Comparison</p>
+            <h2 class="section-title">How Bazi differs from Western astrology</h2>
+        </div>
+        <div class="comparison-table-wrap">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Western Astrology</th>
+                        <th>Bazi (Four Pillars)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary input</td>
+                        <td>Sun sign (birth date)</td>
+                        <td>Full birth date + time + place</td>
+                    </tr>
+                    <tr>
+                        <td>Core unit</td>
+                        <td>Zodiac sign</td>
+                        <td>Day Master element</td>
+                    </tr>
+                    <tr>
+                        <td>Time analysis</td>
+                        <td>Transits &amp; progressions</td>
+                        <td>10-year Luck Cycles (大运)</td>
+                    </tr>
+                    <tr>
+                        <td>Validation method</td>
+                        <td>Single system</td>
+                        <td>Four schools cross-checked</td>
+                    </tr>
+                    <tr>
+                        <td>Classical texts</td>
+                        <td>Limited</td>
+                        <td>17 classical texts spanning Tang to Qing dynasty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 5: Four Schools ════════════════════ -->
+<section class="four-schools">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">Methodology</p>
+            <h2 class="section-title">Four schools, one consensus</h2>
+            <p class="section-desc">MÍNG LÌ uses a voting method across four major Bazi scholarship traditions. When all four agree, the reading reaches highest confidence.</p>
+        </div>
+        <div class="schools-grid">
+            <div class="school-card">
+                <p class="school-chinese">徐乐吾</p>
+                <h3 class="school-name">Xu Lewu</h3>
+                <p class="school-desc">The definitive commentator on classical texts. His analyses of <em>Zi Ping Zhen Quan</em> and <em>Qiong Tong Bao Jian</em> remain the authoritative standard.</p>
+                <p class="school-method">Pattern &amp; Seasonal Analysis</p>
+            </div>
+            <div class="school-card">
+                <p class="school-chinese">梁湘润</p>
+                <h3 class="school-name">Liang Xiangrun</h3>
+                <p class="school-desc">A systematic, layer-by-layer approach to chart reading. His Three-Track system breaks down every chart into structural, dynamic, and temporal layers.</p>
+                <p class="school-method">Three-Track System</p>
+            </div>
+            <div class="school-card">
+                <p class="school-chinese">袁树珊</p>
+                <h3 class="school-name">Yuan Shushan</h3>
+                <p class="school-desc">Empirical and case-study driven. His Sixteen-Character method combines the original chart with Life Palace, Minor Limits, Major Luck, and Annual Year for maximum coverage.</p>
+                <p class="school-method">Sixteen-Character Method</p>
+            </div>
+            <div class="school-card">
+                <p class="school-chinese">韦千里</p>
+                <h3 class="school-name">Wei Qianli</h3>
+                <p class="school-desc">Practical prediction with documented accuracy. His Eight-Step method focuses on actionable outcomes — what will happen, when, and what to do about it.</p>
+                <p class="school-method">Eight-Step Method</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ BLOCK 6: FAQ ════════════════════ -->
+<section class="faq">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-label">FAQ</p>
+            <h2 class="section-title">Common questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Do I need to know my exact birth time?
+                    <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, ideally to within 30 minutes. The Hour Pillar changes every two hours and significantly affects your reading. If your exact time is unknown, we can still provide a partial analysis based on your date alone — though some chapters will be less detailed.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Is Bazi fortune-telling?
+                    <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="faq-answer">
+                    <p>Not exactly. Think of it as a personality and timing map — it reveals tendencies, strengths, vulnerabilities, and favorable periods. What you do with that information is still your choice. Bazi describes probability, not destiny.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How is this different from the Chinese zodiac?
+                    <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="faq-answer">
+                    <p>The Chinese zodiac uses only your birth year — so everyone born in the same year shares the same animal sign. Bazi uses all four time pillars (year, month, day, and hour), making it vastly more precise and personal. Two people born in the same Year of the Dragon will have completely different Bazi charts.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How accurate is AI-generated Bazi?
+                    <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="faq-answer">
+                    <p>Our system draws on 17 classical texts and 45,000+ knowledge nodes. It applies the same methodology a trained human practitioner would use — manually calculating each pillar, cross-referencing classical sources, and running a four-school consensus vote — without the subjectivity or fatigue that can affect human readers.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Can Bazi predict specific events?
+                    <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+                </button>
+                <div class="faq-answer">
+                    <p>It identifies high-probability windows for major life changes — career shifts, relationship developments, health vulnerabilities. Not a prediction of specific events, but a map of energetic conditions. Think of it as weather forecasting rather than a calendar of appointments.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FINAL CTA ════════════════════ -->
+<section class="final-cta">
+    <div class="container">
+        <p class="section-label">Your Turn</p>
+        <h2 class="section-title">Ready to see your own chart?</h2>
+        <a href="reading.html" class="btn btn-gold" style="padding: 1rem 3rem; font-size: 1.05rem; margin-bottom: 1rem;">Get my reading →</a>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>&copy; 2026 MÍNG LÌ. All rights reserved. For entertainment and self-reflection purposes only.</p>
+    </div>
+</footer>
+
+<script>
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // ── FAQ accordion ──
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.faq-item.open').forEach(el => {
+            el.classList.remove('open');
+        });
+
+        // Toggle clicked
+        if (!isOpen) {
+            item.classList.add('open');
+        }
+    }
+</script>
+
+</body>
+</html>

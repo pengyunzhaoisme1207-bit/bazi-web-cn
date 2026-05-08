@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destiny Report - Results</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #14141f;
+            --border: #2a2a3a;
+            --text: #e0e0e8;
+            --text-dim: #8888a0;
+            --accent: #c8a46e;
+            --accent-hover: #dbb87e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .header h1 {
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .back-btn {
+            padding: 0.4rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Report content */
+        .report-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chapter:last-child {
+            border-bottom: none;
+        }
+
+        .chapter h2 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .chapter h3 {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin: 1.2rem 0 0.5rem;
+        }
+
+        .chapter p {
+            margin-bottom: 0.8rem;
+        }
+
+        .chapter table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .chapter th, .chapter td {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .chapter th {
+            background: var(--surface);
+            color: var(--accent);
+        }
+
+        .chapter ul, .chapter ol {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .chapter li {
+            margin-bottom: 0.3rem;
+        }
+
+        .chapter strong {
+            color: var(--text);
+        }
+
+        .chapter code {
+            background: var(--surface);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        /* Blurred chapters */
+        .chapter.locked {
+            position: relative;
+            filter: blur(6px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.6);
+            z-index: 10;
+            filter: none !important;
+        }
+
+        .locked-overlay .lock-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .locked-overlay p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Unlock CTA */
+        .unlock-cta {
+            max-width: 720px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .unlock-cta h2 {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .unlock-cta p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .unlock-btn {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .unlock-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .features-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .feature-item {
+            padding: 0.8rem;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .feature-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* No data state */
+        .no-data {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-dim);
+        }
+
+        .no-data a {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="report-title">Destiny Report</h1>
+        <a href="/" class="back-btn">&larr; New Report</a>
+    </div>
+
+    <div class="report-container" id="report-content">
+        <!-- Chapters rendered here -->
+    </div>
+
+    <div id="unlock-section">
+        <div class="unlock-cta">
+            <h2>Unlock Full Report</h2>
+            <p>Get complete access to all 10 chapters of your destiny analysis</p>
+            <button class="unlock-btn" id="unlock-btn">Unlock Full Report</button>
+            <div class="features-preview">
+                <div class="feature-item">
+                    <strong>Ch 4-5</strong>
+                    Family, Wealth & Career deep dive, Major Luck Cycles
+                </div>
+                <div class="feature-item">
+                    <strong>Ch 6-7</strong>
+                    Life Palace, Auxiliary Stars, Four Masters Voting
+                </div>
+                <div class="feature-item">
+                    <strong>Ch 8-9</strong>
+                    Zi Wei Dou Shu & Dual-System Cross Validation
+                </div>
+                <div class="feature-item">
+                    <strong>Ch 10</strong>
+                    Comprehensive Advice & Golden Windows
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const FREE_CHAPTERS = 3;
+
+        const reportContent = document.getElementById("report-content");
+        const reportTitle = document.getElementById("report-title");
+        const unlockSection = document.getElementById("unlock-section");
+
+        const raw = localStorage.getItem("bazi_report");
+
+        if (!raw) {
+            reportContent.innerHTML = `
+                <div class="no-data">
+                    <p>No report found.</p>
+                    <p><a href="/">Generate a new report</a></p>
+                </div>`;
+            unlockSection.style.display = "none";
+        } else {
+            const data = JSON.parse(raw);
+            const chapters = data.chapters || [];
+
+            // Set title from first line of report
+            const firstLine = (data.full_report || "").split("\n")[0].replace(/^#\s*/, "");
+            reportTitle.textContent = firstLine || "Destiny Report";
+
+            let html = "";
+            chapters.forEach((ch, i) => {
+                const isFree = i < FREE_CHAPTERS;
+
+                html += `<div class="chapter ${isFree ? "" : "locked"}" id="chapter-${i}">`;
+                html += `<h2>${escapeHtml(ch.title)}</h2>`;
+                html += renderMarkdown(ch.content);
+
+                if (!isFree) {
+                    html += `
+                        <div class="locked-overlay">
+                            <div class="lock-icon">&#128274;</div>
+                            <p>Premium Chapter</p>
+                        </div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            reportContent.innerHTML = html;
+
+            // If all chapters are free (less than 3), hide unlock section
+            if (chapters.length <= FREE_CHAPTERS) {
+                unlockSection.style.display = "none";
+            }
+        }
+
+        // Unlock button handler (placeholder for payment integration)
+        document.getElementById("unlock-btn").addEventListener("click", () => {
+            // TODO: Integrate payment (Stripe, etc.)
+            // After payment success, remove blur from all chapters:
+            // document.querySelectorAll('.chapter.locked').forEach(el => {
+            //     el.classList.remove('locked');
+            //     const overlay = el.querySelector('.locked-overlay');
+            //     if (overlay) overlay.remove();
+            // });
+            alert("Payment integration coming soon. Full report is already in localStorage as 'bazi_report'.");
+        });
+
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function renderMarkdown(md) {
+            if (!md) return "";
+            let html = md;
+
+            // Tables: detect lines with | separator
+            const lines = html.split("\n");
+            const result = [];
+            let inTable = false;
+            let tableRows = [];
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+                if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+                    inTable = true;
+                    tableRows.push(trimmed);
+                } else {
+                    if (inTable) {
+                        result.push(renderTable(tableRows));
+                        tableRows = [];
+                        inTable = false;
+                    }
+                    result.push(line);
+                }
+            }
+            if (inTable) {
+                result.push(renderTable(tableRows));
+            }
+
+            html = result.join("\n");
+
+            // Headings
+            html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
+            html = html.replace(/^#### (.+)$/gm, "<h4>$1</h4>");
+
+            // Bold + italic
+            html = html.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
+            html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+            html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+            // Inline code
+            html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+            // Line breaks to paragraphs (simple)
+            html = html.replace(/\n\n/g, "</p><p>");
+            html = html.replace(/\n/g, "<br>");
+            html = "<p>" + html + "</p>";
+            html = html.replace(/<p><(h[234]|table)/g, "<$1");
+            html = html.replace(/<\/(h[234]|table)><\/p>/g, "</$1>");
+            html = html.replace(/<p><\/p>/g, "");
+
+            return html;
+        }
+
+        function renderTable(rows) {
+            if (rows.length < 2) return escapeHtml(rows.join("\n"));
+            // Skip separator row (row with ---)
+            const dataRows = rows.filter(r => !/^\|[\s\-:|]+\|$/.test(r));
+            if (dataRows.length < 2) return "";
+
+            let html = "<table>";
+            // Header
+            const headers = dataRows[0].split("|").filter(c => c.trim());
+            html += "<tr>";
+            for (const h of headers) {
+                html += `<th>${escapeHtml(h.trim())}</th>`;
+            }
+            html += "</tr>";
+            // Body
+            for (let i = 1; i < dataRows.length; i++) {
+                const cells = dataRows[i].split("|").filter(c => c.trim());
+                html += "<tr>";
+                for (const c of cells) {
+                    html += `<td>${escapeHtml(c.trim())}</td>`;
+                }
+                html += "</tr>";
+            }
+            html += "</table>";
+            return html;
+        }
+    </script>
+</body>
+</html>

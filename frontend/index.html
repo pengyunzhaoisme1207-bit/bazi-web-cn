@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destiny Report - Bazi & Zi Wei Dou Shu</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #14141f;
+            --border: #2a2a3a;
+            --text: #e0e0e8;
+            --text-dim: #8888a0;
+            --accent: #c8a46e;
+            --accent-hover: #dbb87e;
+            --error: #e06060;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        form {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 0.4rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent);
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--accent-hover);
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error-msg {
+            color: var(--error);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Loading overlay */
+        .loading {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .loading-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 3rem;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Destiny Report</h1>
+        <p class="subtitle">Bazi Four Pillars + Zi Wei Dou Shu Analysis</p>
+
+        <form id="birth-form">
+            <div class="form-group">
+                <label for="name">Name / Nickname</label>
+                <input type="text" id="name" name="name" required placeholder="Your name">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="birth_date">Birth Date</label>
+                    <input type="date" id="birth_date" name="birth_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="birth_time">Birth Time</label>
+                    <input type="time" id="birth_time" name="birth_time" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="birth_place">Birth Place</label>
+                    <input type="text" id="birth_place" name="birth_place" required placeholder="City, Country">
+                </div>
+            </div>
+
+            <button type="submit" id="submit-btn">Generate Report</button>
+        </form>
+
+        <p class="error-msg" id="error-msg"></p>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p>Generating your destiny report...</p>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem;">This may take 30-60 seconds</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("birth-form");
+        const loading = document.getElementById("loading");
+        const errorMsg = document.getElementById("error-msg");
+        const submitBtn = document.getElementById("submit-btn");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            errorMsg.style.display = "none";
+            loading.classList.add("active");
+            submitBtn.disabled = true;
+
+            const data = {
+                name: document.getElementById("name").value,
+                birth_date: document.getElementById("birth_date").value,
+                birth_time: document.getElementById("birth_time").value,
+                gender: document.getElementById("gender").value,
+                birth_place: document.getElementById("birth_place").value,
+            };
+
+            try {
+                const res = await fetch("/generate-report", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || "Failed to generate report");
+                }
+
+                const result = await res.json();
+                // Store report data and navigate to report page
+                localStorage.setItem("bazi_report", JSON.stringify(result));
+                window.location.href = "/report";
+            } catch (err) {
+                errorMsg.textContent = err.message;
+                errorMsg.style.display = "block";
+            } finally {
+                loading.classList.remove("active");
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
